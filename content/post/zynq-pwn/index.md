@@ -15,14 +15,108 @@ catagories:
     - zynq
 ---
 
-> **Note**{: .note}
-> 这是一个普通提示。
+状态设计之我见：
+> 我从你的分析视角看到了我之前缺略的一个思路，就是很好的区分了边界和状态。简而言之，边界之间是状态。然而对于一般的设计，边界是易于表达的，而状态是易于理解的。以周期的计算来说，边界就是counter这个计数器构成了0，1，2---n-1这个n个边界点，其中存在突变点m。但是边界点却不能直观看出时间，我们将两个边界之间的点定义为状态。一般来说，每个状态的参数是相同的（比如每个状态的时间).然后我们就去计算我们要去讨论的大状态包含的基状态，比如一个周期包含的基状态，一个周期中上升沿包含的基状态。而基状态的研究只需要看大状态对应的边界点就行了   
 
-> **Tip**{: .tip}
-> 这是一个小技巧。
 
-> **Warning**{: .warning}
-> 这是一个警告。
+# 代码
 
-> **Important**{: .important}
-> 这是一条重要信息。
+```verilog
+//pwm.sv
+// 1个端口控制输出pwm的周期，3个输入端口分别控制3个输出端口的占空比
+module pwm (
+    input logic clk,
+    input logic [15:0] period,
+    input logic [15:0] duty1,
+    input logic [15:0] duty2,
+    input logic [15:0] duty3,
+    input logic rst,
+    output logic pwm1,
+    output logic pwm2,
+    output logic pwm3
+);
+
+  logic [15:0] counter = 0;
+  always_ff @(posedge clk, negedge rst) begin : pwm_block
+    if (!rst) begin
+      counter <= 0;
+    end else begin
+      if (counter < period - 1) counter <= counter + 1;
+      else counter <= 0;
+      //pmw1
+    end
+  end
+  always_comb begin
+    if (counter < duty1) begin
+      pwm1 = 0;
+    end else begin
+      pwm1 = 1;
+    end
+
+    if (counter < duty2) begin
+      pwm2 = 0;
+    end else begin
+      pwm2 = 1;
+    end
+
+
+    if (counter < duty3) begin
+      pwm3 = 0;
+    end else begin
+      pwm3 = 1;
+    end
+
+
+  end
+endmodule
+// 注：这个代码写的并不规范，应该把组合逻辑部分放到时序部分变成同步更新，减少毛刺
+```
+
+```verilog
+//tb_pwm.sv
+module tb_pwm ();
+  parameter real CLK_PERIOD = 10;  //假设时钟周期为10ns
+  logic clk;
+  logic [15:0] period;
+  logic [15:0] duty1;
+  logic [15:0] duty2;
+  logic [15:0] duty3;
+  logic rst;
+  logic pwm1;
+  logic pwm2;
+  logic pwm3;
+  pwm dut_pwm (
+      .clk(clk),
+      .period(period),
+      .duty1(duty1),
+      .duty2(duty2),
+      .duty3(duty3),
+      .rst(rst),
+      .pwm1(pwm1),
+      .pwm2(pwm2),
+      .pwm3(pwm3)
+  );
+
+  initial begin
+    clk = 0;
+   end
+  always begin
+    #(CLK_PERIOD / 2) clk = ~clk;
+  end
+
+  initial begin
+    rst = 1;
+    @(posedge clk);
+    period = 10;
+    duty1 = 2;
+    duty2 = 4;
+    duty3 = 6;
+    repeat (1000) @(posedge clk) ;
+    $finish;
+  end
+endmodule
+
+```
+
+
+# AXI

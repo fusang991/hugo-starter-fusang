@@ -1,5 +1,5 @@
 ---
-title: "以pwm为例实现axi的ip封装"
+title: "以pwm为例实现axi的ip封装(created by gemini)"
 description: 
 date: 2025-10-23T22:40:54+08:00
 image: 

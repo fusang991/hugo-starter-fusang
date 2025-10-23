@@ -6,7 +6,7 @@ image:
 math: 
 license: 
 hidden: false
-comments: true
+comments: false
 draft: false
 tags:
     - zynq
@@ -14,6 +14,14 @@ tags:
 catagories:
     - zynq
 ---
+# 优质blog
+- [ustc:axi4总线](https://soc.ustc.edu.cn/CECS/lab5/axi/)
+
+- [ustc:cecs2023 计算机综合实验](https://soc.ustc.edu.cn/CECS/)
+
+
+
+#
 
 状态设计之我见：
 > 我从你的分析视角看到了我之前缺略的一个思路，就是很好的区分了边界和状态。简而言之，边界之间是状态。然而对于一般的设计，边界是易于表达的，而状态是易于理解的。以周期的计算来说，边界就是counter这个计数器构成了0，1，2---n-1这个n个边界点，其中存在突变点m。但是边界点却不能直观看出时间，我们将两个边界之间的点定义为状态。一般来说，每个状态的参数是相同的（比如每个状态的时间).然后我们就去计算我们要去讨论的大状态包含的基状态，比如一个周期包含的基状态，一个周期中上升沿包含的基状态。而基状态的研究只需要看大状态对应的边界点就行了   

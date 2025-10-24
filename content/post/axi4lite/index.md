@@ -6,7 +6,7 @@ image:
 math: 
 license: 
 hidden: false
-comments:false 
+comments: false 
 draft: false
 categories:
   - zynq

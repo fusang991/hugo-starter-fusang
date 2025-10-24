@@ -1,5 +1,5 @@
 ---
-title: "Zynq Pwn"
+title: "Zynq Pwm"
 description: 
 date: 2025-10-23T21:46:18+08:00
 image: 

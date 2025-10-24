@@ -10,7 +10,7 @@ comments: false
 draft: false
 categories:
     - tools
-- tags:
+tags:
     - tools
 ---
 好的，这是一个关于 `fzf`、`fd` 和 `rg` 这三个现代命令行神器（俗称“命令行三剑客”）的用法梗概。它们各自独立时已经非常强大，但组合使用更能发挥出惊人的效率。

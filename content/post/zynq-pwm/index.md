@@ -130,28 +130,66 @@ endmodule
 # PS 代码
 ```c
 //ps 端通过uart控制占空比
+//ps 端通过uart控制占空比
 #include "xparameters.h"
 #include "xil_io.h"
+#include "xuartlite.h"
+#include "xuartlite_l.h"
+#include "xuartlite_i.h"
 
 #define period_offset 0x00
 #define duty1_offset 0x04
 #define duty2_offset 0x08
-#define duty3_offset 0x12
+#define duty3_offset 0x0c
 int main(void){
+
+   //uartlite
+   XUartLite uartlite0;
+   XUartLite_Initialize(&uartlite0,XPAR_XUARTLITE_0_BASEADDR);
+   u8 recv_package[8];
+   u8 send_package[8]={'i','n'};
+   //XUartLite_Send(&uartlite0,send_package,2);
    // T=period/fclk
    // 由于设计失误,duty1,2,3分别表示一个周期内低电平的状态数
+
    u32 period=1000;
-   u32 duty1=1000;
-   u32 duty2=2000;
-   u32 duty3=3000;
+   u32 duty1=600;
+   u32 duty2=400;
+   u32 duty3=200;
    Xil_Out32(XPAR_PWM_IP_0_BASEADDR+period_offset,period);
    Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty1_offset,duty1);
    Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty2_offset,duty2);
    Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty3_offset,duty3);
    while(1)
-   {
+   {  
+      XUartLite_Send(&uartlite0,send_package,2);
+       //XUartLite_Send(&uartlite0,send_package,2);
+      recv_package[0]=XUartLite_RecvByte(XPAR_XUARTLITE_0_BASEADDR);
+      XUartLite_Send(&uartlite0,send_package,2);
+      recv_package[1]=XUartLite_RecvByte(XPAR_XUARTLITE_0_BASEADDR);
+      recv_package[2]=XUartLite_RecvByte(XPAR_XUARTLITE_0_BASEADDR);
+      //XUartLite_Recv(&uartlite0,recv_package,3);
+       XUartLite_Send(&uartlite0,send_package,2);
+      u32 sum=10*(recv_package[1]-'0')+(recv_package[2]-'0');
+      u32 duty=period-period*sum/100;
+      if(recv_package[0]=='1')
+      {
+         duty1=duty;
+         Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty1_offset,duty1);
+      }
 
+      else if(recv_package[0]=='2')
+      {
+         duty2=duty;
+         Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty2_offset,duty2);
+      }
+      else
+      {
+         duty3=duty;
+         Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty3_offset,duty3);
+      }
    }
 }
+
 ```
 # AXI

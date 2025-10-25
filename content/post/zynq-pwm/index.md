@@ -127,4 +127,31 @@ endmodule
 ```
 
 
+# PS 代码
+```c
+//ps 端通过uart控制占空比
+#include "xparameters.h"
+#include "xil_io.h"
+
+#define period_offset 0x00
+#define duty1_offset 0x04
+#define duty2_offset 0x08
+#define duty3_offset 0x12
+int main(void){
+   // T=period/fclk
+   // 由于设计失误,duty1,2,3分别表示一个周期内低电平的状态数
+   u32 period=1000;
+   u32 duty1=1000;
+   u32 duty2=2000;
+   u32 duty3=3000;
+   Xil_Out32(XPAR_PWM_IP_0_BASEADDR+period_offset,period);
+   Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty1_offset,duty1);
+   Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty2_offset,duty2);
+   Xil_Out32(XPAR_PWM_IP_0_BASEADDR+duty3_offset,duty3);
+   while(1)
+   {
+
+   }
+}
+```
 # AXI

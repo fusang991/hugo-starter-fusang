@@ -14,6 +14,7 @@ tags:
     - digital
     - zynq
     - uart
+    - wip
 ---
 
 [参考文章：VHDL whiz](https://vhdlwhiz.com/how-the-axi-style-ready-valid-handshake-works/)

@@ -12,6 +12,7 @@ categories:
     - zynq
 tags:
     - zynq
+    - wip
 ---
 
 zynq ps端有一圈信号端口，本文将逐一拆解

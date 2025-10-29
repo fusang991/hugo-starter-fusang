@@ -10,7 +10,11 @@ comments: false
 draft: false
 categories:
     - verilog
+tags:
+    - wip
+    - verilog
 ---
+
 
 ## generate for
 

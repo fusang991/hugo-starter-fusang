@@ -8,6 +8,10 @@ license:
 hidden: false
 comments: false
 draft: false
+tags:
+    - wip
+categories:
+    - zynq
 ---
 
 zynq有着完备以及强大的文档辅助学习，本文将记录阅读过的zynq文档，简单评价或是剖析精彩的章节

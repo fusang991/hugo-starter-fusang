@@ -11,8 +11,10 @@ draft: false
 tags:
     - zynq
     - digital
+    - wip
 catagories:
     - zynq
+
 ---
 # 优质blog
 - [ustc:axi4总线](https://soc.ustc.edu.cn/CECS/lab5/axi/)

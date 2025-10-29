@@ -62,7 +62,62 @@ endmodule
 ```
 ![generate2](generate2.png)
 
+> 草率了，忘记数组不能负索引了，但是负索引竟然可以综合
+
+## generate for3
+```verilog
+module generate_for1(
+input logic clk,
+input  logic in,
+output logic [3:0]out
+    );
+    
+genvar i;   
+
+generate 
+for(i=1;i<=3;i=i+1) begin
+always_ff@(posedge clk) begin
+//out[0]<=in;
+out[i]<=out[i-1];
+end
+always_ff@(posedge clk) begin
+out[0]<=in;
+end
+
+
+end
+endgenerate
+endmodule
+```
+![generate3](generate3.png)
+## generate 4
+```verilog
+module generate_for1(
+input logic clk,
+input  logic in,
+output logic [3:0]out
+    );
+    
+genvar i;   
+
+generate 
+for(i=1;i<=3;i=i+1) begin
+always_ff@(posedge clk) begin
+//out[0]<=in;
+out[i]<=out[i-1];
+end
+end
+endgenerate
+always_ff@(posedge clk) begin
+out[0]<=in;
+end
+endmodule
+```
+
+![generate4](generate4.png)
+
 # for 
+
 ## ex1
 ``` verilog
 module for1(
@@ -81,6 +136,9 @@ end
 end 
 endmodule
 ```
+
+
+
 ![for1](2.png)
 
 ## ex2
@@ -104,3 +162,6 @@ endmodule
 ```
 
 ![for2](for2.png)
+
+> 草率了，忘记数组不能负索引了，但是负索引竟然可以综合
+

@@ -10,7 +10,7 @@ comments: false
 draft: false
 categories:
     - python
-draft:
+tags:
     - python
     - ai-creation
 

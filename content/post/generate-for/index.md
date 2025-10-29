@@ -12,18 +12,17 @@ categories:
     - verilog
 ---
 
+## generate for
 
-# generate for 
+### generate for 1
 
-## ex1
-``` verilog
-
+```verilog
 module generate_for1(
 input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 genvar i;   
 
 generate 
@@ -37,16 +36,18 @@ end
 endgenerate
 endmodule
 ```
+
 ![generate1](generate1.png)
 
-## ex2
+### generate for2
+
 ```verilog
 module generate_for1(
 input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 genvar i;   
 
 generate 
@@ -60,18 +61,20 @@ end
 endgenerate
 endmodule
 ```
+
 ![generate2](generate2.png)
 
 > 草率了，忘记数组不能负索引了，但是负索引竟然可以综合
 
-## generate for3
+### generate for3
+
 ```verilog
 module generate_for1(
 input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 genvar i;   
 
 generate 
@@ -89,15 +92,18 @@ end
 endgenerate
 endmodule
 ```
+
 ![generate3](generate3.png)
-## generate 4
+
+### generate for 4
+
 ```verilog
 module generate_for1(
 input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 genvar i;   
 
 generate 
@@ -116,16 +122,17 @@ endmodule
 
 ![generate4](generate4.png)
 
-# for 
+## for
 
-## ex1
-``` verilog
+### for1
+
+```verilog
 module for1(
 input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 integer i;   
 always_ff@(posedge clk) begin
 out[0]<=in;
@@ -137,11 +144,9 @@ end
 endmodule
 ```
 
-
-
 ![for1](2.png)
 
-## ex2
+### for2
 
 ```verilog
 module for1(
@@ -149,7 +154,7 @@ input logic clk,
 input  logic in,
 output logic [3:0]out
     );
-    
+
 integer i;   
 always_ff@(posedge clk) begin
 out[0]<=in;
@@ -164,4 +169,3 @@ endmodule
 ![for2](for2.png)
 
 > 草率了，忘记数组不能负索引了，但是负索引竟然可以综合
-

@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 ---
-
+## vitis code 
 ``` c
 #include "xparameters.h"
 #include "xspi.h"
@@ -58,3 +58,8 @@ int main(void){
 
 }
 ```
+
+
+## 总结
+
+- 烦的第一大错误：忘记在vivado中设置ddr

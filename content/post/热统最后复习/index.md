@@ -3,7 +3,7 @@ title: "热统最后复习"
 description: 
 date: 2025-11-13T12:06:09+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: false

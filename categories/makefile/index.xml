@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Makefile on fusang blog</title><link>https://demo.stack.jimmycai.com/categories/makefile/</link><description>Recent content in Makefile on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 02 Nov 2025 12:01:24 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/makefile/index.xml" rel="self" type="application/rss+xml"/><item><title>以vitis的makefile为例学习</title><link>https://demo.stack.jimmycai.com/post/%E4%BB%A5vitis%E7%9A%84makefile%E4%B8%BA%E4%BE%8B%E5%AD%A6%E4%B9%A0/</link><pubDate>Sun, 02 Nov 2025 12:01:24 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E4%BB%A5vitis%E7%9A%84makefile%E4%B8%BA%E4%BE%8B%E5%AD%A6%E4%B9%A0/</guid><description>&lt;p&gt;好的，完全没问题！我们彻底回归本源，从“第一性原理”出发来理解 Makefile，然后再将这些原理应用到你提供的那个优雅的 Vitis Makefile 上。&lt;/p&gt;
+&lt;h3 id="第一部分makefile-的第一性原理"&gt;第一部分：Makefile 的第一性原理
+&lt;/h3&gt;&lt;p&gt;想象一下，你不是在写代码，而是在厨房里烤蛋糕。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;目标 (Target)&lt;/strong&gt;：你最终想要的东西，比如一个“巧克力蛋糕”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;依赖 (Prerequisites)&lt;/strong&gt;：为了做出蛋糕，你先需要准备好的东西，比如“面粉”、“鸡蛋”、“巧克力酱”。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;指令 (Command)&lt;/strong&gt;：你具体要执行的动作，比如“把面粉和鸡蛋混合”、“加入巧克力酱并搅拌”、“放入烤箱烤30分钟”。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Makefile 的核心思想就是描述这种关系：&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;要想得到【目标】，必须先确保【依赖】都已就绪，然后执行【指令】。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;code&gt;make&lt;/code&gt; 这个工具最聪明的地方在于，它会检查文件的时间戳。如果“巧克力蛋糕”比“巧克力酱”更新，说明你已经用最新的酱做过蛋糕了，&lt;code&gt;make&lt;/code&gt; 就什么也不做，以节省时间。但如果你刚买了一瓶新的“巧克力酱”（文件时间戳更新了），&lt;code&gt;make&lt;/code&gt; 就知道必须重新烤一个蛋糕。&lt;/p&gt;
+&lt;h4 id="1-基本语法规则-rule"&gt;1. 基本语法：规则 (Rule)
+&lt;/h4&gt;&lt;p&gt;Makefile 的所有内容都由一条条的“规则”构成。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;目标&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; 依赖1 依赖2 ...
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;lt;Tab&amp;gt;指令1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;lt;Tab&amp;gt;指令2
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; ...
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;目标 (target)&lt;/code&gt;&lt;/strong&gt;: 通常是一个文件名，是你希望生成的文件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;:&lt;/code&gt;&lt;/strong&gt;: 分隔符。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;依赖 (prerequisites)&lt;/code&gt;&lt;/strong&gt;: 其他文件名，目标文件依赖于它们。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;指令 (command)&lt;/code&gt;&lt;/strong&gt;: 必须以一个 &lt;strong&gt;Tab&lt;/strong&gt; 字符开头！这是最常见的初学者错误。这些是 Shell 命令，比如 &lt;code&gt;gcc&lt;/code&gt;, &lt;code&gt;cp&lt;/code&gt;, &lt;code&gt;rm&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;最简单的例子：&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# hello.c 是源代码
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# hello 是编译后的可执行文件
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;.&lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &amp;lt;Tab&amp;gt;gcc hello.c -o hello
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当你输入 &lt;code&gt;make&lt;/code&gt; 时，它会：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;找到默认目标 &lt;code&gt;hello&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;检查它的依赖 &lt;code&gt;hello.c&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;比较 &lt;code&gt;hello&lt;/code&gt; 和 &lt;code&gt;hello.c&lt;/code&gt; 的修改时间。
+&lt;ul&gt;
+&lt;li&gt;如果 &lt;code&gt;hello&lt;/code&gt; 文件不存在，或者 &lt;code&gt;hello.c&lt;/code&gt; 比 &lt;code&gt;hello&lt;/code&gt; 更新，那么&amp;hellip;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;执行指令 &lt;code&gt;gcc hello.c -o hello&lt;/code&gt; 来重新生成 &lt;code&gt;hello&lt;/code&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="2-变量-variables"&gt;2. 变量 (Variables)
+&lt;/h4&gt;&lt;p&gt;为了不重复写同样的东西，我们使用变量。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 定义变量
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;COMPILER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; gcc
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;FLAGS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; -Wall -g
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 使用变量 $(VARIABLE_NAME)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;.&lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;$(&lt;/span&gt;COMPILER&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;FLAGS&lt;span class="k"&gt;)&lt;/span&gt; hello.c -o hello
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这样做的好处是，如果想换编译器（比如 &lt;code&gt;clang&lt;/code&gt;）或者修改编译选项，只需要改一行变量定义即可。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="第二部分让-makefile-变得优雅的进阶语法"&gt;第二部分：让 Makefile 变得“优雅”的进阶语法
+&lt;/h3&gt;&lt;p&gt;如果项目里有几十个 &lt;code&gt;.c&lt;/code&gt; 文件，为每个文件都写一条规则太痛苦了。所以 &lt;code&gt;make&lt;/code&gt; 提供了一些强大的工具来自动化这个过程。&lt;/p&gt;
+&lt;h4 id="1-自动化变量-automatic-variables"&gt;1. 自动化变量 (Automatic Variables)
+&lt;/h4&gt;&lt;p&gt;在规则的指令部分，你可以使用一些特殊的变量，它们会自动被 &lt;code&gt;make&lt;/code&gt; 替换：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$@&lt;/code&gt;: 代表&lt;strong&gt;目标&lt;/strong&gt;的名字。 (The **@**t symbol, the target)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$&amp;lt;&lt;/code&gt;: 代表&lt;strong&gt;第一个依赖&lt;/strong&gt;的名字。 (The &lt;strong&gt;&amp;lt;&lt;/strong&gt; left-arrow, input)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$^&lt;/code&gt;: 代表&lt;strong&gt;所有依赖&lt;/strong&gt;的名字，用空格隔开。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;现在，我们的规则可以写得更通用：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nf"&gt;hello&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;hello&lt;/span&gt;.&lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;$(&lt;/span&gt;COMPILER&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;FLAGS&lt;span class="k"&gt;)&lt;/span&gt; $&amp;lt; -o &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;code&gt;$&amp;lt;&lt;/code&gt; 会被替换为 &lt;code&gt;hello.c&lt;/code&gt;，&lt;code&gt;$@&lt;/code&gt; 会被替换为 &lt;code&gt;hello&lt;/code&gt;。效果和之前完全一样，但更具可读性和通用性。&lt;/p&gt;
+&lt;h4 id="2-模式规则-pattern-rules"&gt;2. 模式规则 (Pattern Rules)
+&lt;/h4&gt;&lt;p&gt;这是 Makefile 的精华所在！它允许你定义一个“模板”规则来处理一整类的文件。&lt;code&gt;%&lt;/code&gt; 是一个通配符。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这个规则告诉 make 如何从任意一个 .c 文件生成一个对应的 .o 文件
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;%.o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; %.&lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;$(&lt;/span&gt;COMPILER&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;FLAGS&lt;span class="k"&gt;)&lt;/span&gt; -c $&amp;lt; -o &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;%.o&lt;/code&gt;: 匹配任何以 &lt;code&gt;.o&lt;/code&gt; 结尾的目标，比如 &lt;code&gt;xspi.o&lt;/code&gt;, &lt;code&gt;main.o&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;%.c&lt;/code&gt;: 匹配与目标同名的 &lt;code&gt;.c&lt;/code&gt; 依赖，比如 &lt;code&gt;xspi.c&lt;/code&gt;, &lt;code&gt;main.c&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;指令 &lt;code&gt;$(COMPILER) $(FLAGS) -c $&amp;lt; -o $@&lt;/code&gt; 现在可以处理任何 &lt;code&gt;xxx.c -&amp;gt; xxx.o&lt;/code&gt; 的编译！&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-函数-functions"&gt;3. 函数 (Functions)
+&lt;/h4&gt;&lt;p&gt;Makefile 提供了类似编程语言的函数来处理文本。你提供的 Makefile 中用到了几个关键函数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$(wildcard PATTERN)&lt;/code&gt;: 查找并返回匹配 &lt;code&gt;PATTERN&lt;/code&gt; 的所有文件名。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SRCFILES := $(wildcard *.c)&lt;/code&gt; 会找到当前目录下所有 &lt;code&gt;.c&lt;/code&gt; 文件，并把它们的列表赋值给 &lt;code&gt;SRCFILES&lt;/code&gt; 变量。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$(basename NAMES)&lt;/code&gt;: 去掉文件名中的后缀。
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;$(basename xspi.c xspi_g.c)&lt;/code&gt; 会返回 &lt;code&gt;xspi xspi_g&lt;/code&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$(addsuffix SUFFIX, NAMES)&lt;/code&gt;: 给列表中的每个名字添加后缀。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$(addprefix PREFIX, NAMES)&lt;/code&gt;: 给列表中的每个名字添加前缀。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第三部分用第一性原理解读你的-vitis-makefile"&gt;第三部分：用第一性原理解读你的 Vitis Makefile
+&lt;/h3&gt;&lt;p&gt;现在，我们用刚刚学到的知识来逐段分析这个 Makefile。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 1. 变量定义区 (Principles: Variables)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这些变量被故意留空，等待外部传入。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这就像一个函数有多个参数，等待调用者提供具体的值。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;COMPILER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;COMPILER_FLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;EXTRA_COMPILER_FLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 定义输出目录和头文件目录
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;RELEASEDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../../../lib/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;INCLUDEDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../../../include/
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 定义 include 路径
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;INCLUDES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;-I./. -I&lt;span class="k"&gt;$(&lt;/span&gt;INCLUDEDIR&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 2. 自动化文件处理 (Principles: Functions, Variables)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 自动查找当前目录下所有 .c 文件
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;SRCFILES&lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;wildcard *.c&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这是一行优雅的核心代码，我们来分解它：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 假设 SRCFILES 是 &amp;#34;xspi.c xspi_options.c&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 1. $(basename $(SRCFILES)) -&amp;gt; &amp;#34;xspi xspi_options&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 2. $(addsuffix .o, ...) -&amp;gt; &amp;#34;xspi.o xspi_options.o&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 3. $(addprefix $(RELEASEDIR), ...) -&amp;gt; &amp;#34;../../../lib/xspi.o ../../../lib/xspi_options.o&amp;#34;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nv"&gt;OBJECTS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;addprefix &lt;span class="k"&gt;$(&lt;/span&gt;RELEASEDIR&lt;span class="k"&gt;)&lt;/span&gt;, &lt;span class="k"&gt;$(&lt;/span&gt;addsuffix .o, &lt;span class="k"&gt;$(&lt;/span&gt;basename &lt;span class="k"&gt;$(&lt;/span&gt;wildcard *.c&lt;span class="k"&gt;))))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这一行代码就自动计算出了所有需要生成的目标文件（&lt;code&gt;.o&lt;/code&gt; 文件）以及它们应该存放的位置。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 3. 定义最终目标 (Principles: Rules)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 定义了一个叫 libs 的目标，它依赖于所有我们刚刚计算出的 .o 文件。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 当你运行 `make` 或 `make libs` 时，make 会确保所有 $(OBJECTS) 都被生成。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;libs&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;OBJECTS&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;这是一个“聚合目标”，它本身没有指令，它的作用就是触发所有依赖项的构建。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 4. 定义核心编译规则 (Principles: Pattern Rules, Automatic Variables)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这条模式规则是整个 Makefile 的“引擎”。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 它告诉 make 如何从一个 .c 文件（在当前目录）
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 生成一个 .o 文件（在 RELEASEDIR 目录）。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;$(RELEASEDIR)%.o&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; %.&lt;span class="n"&gt;c&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;COMPILER&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;CC_FLAGS&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;ECC_FLAGS&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;INCLUDES&lt;span class="k"&gt;)&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;DEPENDENCY_FLAGS&lt;span class="k"&gt;)&lt;/span&gt; $&amp;lt; -o &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;$(RELEASEDIR)%.o: %.c&lt;/code&gt;&lt;/strong&gt;: 模式。例如，为了生成目标 &lt;code&gt;../../../lib/xspi.o&lt;/code&gt;，&lt;code&gt;make&lt;/code&gt; 会自动寻找依赖 &lt;code&gt;xspi.c&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;$&amp;lt;&lt;/code&gt;&lt;/strong&gt;: 自动替换为依赖，即 &lt;code&gt;xspi.c&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;$@&lt;/code&gt;&lt;/strong&gt;: 自动替换为目标，即 &lt;code&gt;../../../lib/xspi.o&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;$(COMPILER)&lt;/code&gt; 等都是外部传入的变量，提供了极大的灵活性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-makefile" data-lang="makefile"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 5. 定义头文件安装规则 (Principles: Rules, Pattern Rules)
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# --------------------
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# .PHONY: include &amp;lt;-- 告诉make，&amp;#34;include&amp;#34; 不是一个文件名，而是一个动作的名称。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;.PHONY&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;include&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# &amp;#39;make include&amp;#39; 这个动作，依赖于所有头文件被拷贝到目标目录。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;include&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;addprefix&lt;/span&gt; &lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;INCLUDEDIR&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;,&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nv"&gt;wildcard&lt;/span&gt; *.&lt;span class="nv"&gt;h&lt;/span&gt;&lt;span class="k"&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 这是拷贝头文件的模式规则：
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# 如何生成一个在 INCLUDEDIR 里的 .h 文件？从当前目录的同名 .h 文件拷贝。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;&lt;/span&gt;&lt;span class="nf"&gt;$(INCLUDEDIR)%.h&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; %.&lt;span class="n"&gt;h&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;$(&lt;/span&gt;CP&lt;span class="k"&gt;)&lt;/span&gt; $&amp;lt; &lt;span class="nv"&gt;$@&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="第四部分如何具体使用这个-makefile"&gt;第四部分：如何具体使用这个 Makefile
+&lt;/h3&gt;&lt;p&gt;这个 Makefile 被设计成一个“组件”，由一个更上层的系统来调用和配置。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;配置变量&lt;/strong&gt;: 你不会直接修改这个 Makefile。而是在调用 &lt;code&gt;make&lt;/code&gt; 命令时，从命令行传入变量的值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;执行目标&lt;/strong&gt;: 你告诉 &lt;code&gt;make&lt;/code&gt; 你想要什么目标。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;一个典型的使用场景会是这样：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在一个终端里，&lt;code&gt;cd&lt;/code&gt; 到这个 &lt;code&gt;src&lt;/code&gt; 目录下，然后执行：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 编译所有 .o 文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;make &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="nv"&gt;COMPILER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;arm-none-eabi-gcc&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="nv"&gt;COMPILER_FLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;-O2 -c&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="nv"&gt;DEPENDENCY_FLAGS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;-MMD -MP&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; libs
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 安装所有头文件到 include 目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;make &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="nv"&gt;INCLUDEDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../../../include &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; include
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 清理所有生成的文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;make &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; &lt;span class="nv"&gt;RELEASEDIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;../../../lib/ &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="se"&gt;&lt;/span&gt; clean
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;COMPILER=&amp;quot;arm-none-eabi-gcc&amp;quot;&lt;/code&gt;: 为变量 &lt;code&gt;COMPILER&lt;/code&gt; 赋值，指定了交叉编译器。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;COMPILER_FLAGS=&amp;quot;-O2 -c&amp;quot;&lt;/code&gt;: 传入了编译选项（优化等级2，只编译不链接）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;libs&lt;/code&gt;: 告诉 &lt;code&gt;make&lt;/code&gt; 我们想要的目标是 &lt;code&gt;libs&lt;/code&gt;。&lt;code&gt;make&lt;/code&gt; 就会自动找到 &lt;code&gt;libs&lt;/code&gt; 规则，然后去构建它的所有依赖（即所有的 &lt;code&gt;.o&lt;/code&gt; 文件）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;总结起来，这个 Makefile 的优雅之处在于：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;声明式&lt;/strong&gt;: 你只描述了“什么依赖什么”以及“如何生成”，而不是一步步的命令。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自动化&lt;/strong&gt;: 自动发现源文件、自动计算目标文件、自动应用编译规则。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可配置和可复用&lt;/strong&gt;: 通过外部变量进行配置，使得这个 Makefile 本身可以被用在任何 C 语言库的编译中，无需修改一个字。&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

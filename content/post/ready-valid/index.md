@@ -8,7 +8,7 @@ license:
 hidden: false
 comments: true
 draft: false
-catagories:
+categories:
     - zynq
 tags:
     - digital

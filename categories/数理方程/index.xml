@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>数理方程 on fusang blog</title><link>https://demo.stack.jimmycai.com/categories/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B/</link><description>Recent content in 数理方程 on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 21 Nov 2025 15:47:53 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>数理方程分离变量法</title><link>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95/</link><pubDate>Fri, 21 Nov 2025 15:47:53 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95/</guid><description>&lt;p&gt;这是一份非常系统的总结需求。掌握这四种情况，基本上就覆盖了本科数理方程考试中&lt;strong&gt;分离变量法&lt;/strong&gt; 90% 的考点。&lt;/p&gt;
+&lt;p&gt;核心逻辑是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;边界条件&lt;/strong&gt;决定了**固有函数（基底）**的形式（是 $\sin$ 还是 $\cos$）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方程类型&lt;/strong&gt;决定了&lt;strong&gt;时间/另一维度函数&lt;/strong&gt;的形式（是振荡、衰减还是双曲）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="第一部分一维演化方程弦振动-vs-热传导"&gt;第一部分：一维演化方程（弦振动 vs 热传导）
+&lt;/h3&gt;&lt;p&gt;这两种方程的&lt;strong&gt;空间部分（$x$）处理方式完全一样&lt;/strong&gt;，区别仅在于&lt;strong&gt;时间部分（$t$）&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;弦振动 (Wave):&lt;/strong&gt; $u_{tt} = a^2 u_{xx}$ $\rightarrow$ 时间是振荡的 ($\sin \omega t, \cos \omega t$)，甚至有线性增长 ($t$)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导 (Heat):&lt;/strong&gt; $u_t = a^2 u_{xx}$ $\rightarrow$ 时间是衰减的 ($e^{-k^2 t}$)，或者是常数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="1-两端固定-dirichlet-dirichlet"&gt;1. 两端固定 (Dirichlet-Dirichlet)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u(0)=0, u(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $\sin \frac{n\pi x}{l}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解:&lt;/strong&gt;
+$$ u = \sum_{n=1}^\infty \left( C_n \cos \frac{n\pi a t}{l} + D_n \sin \frac{n\pi a t}{l} \right) \sin \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解:&lt;/strong&gt;
+$$ u = \sum_{n=1}^\infty C_n e^{-\left(\frac{n\pi a}{l}\right)^2 t} \sin \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-两端自由-neumann-neumann--高频考点"&gt;2. 两端自由 (Neumann-Neumann) —— &lt;strong&gt;高频考点&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u_x(0)=0, u_x(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $1$ (对应 $n=0$) 和 $\cos \frac{n\pi x}{l}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解 (含刚体位移):&lt;/strong&gt;
+$$ u = \underbrace{C_0 + D_0 t}_{\color{red}{n=0 \text{项}}} + \sum_{n=1}^\infty \left( C_n \cos \dots + D_n \sin \dots \right) \cos \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解 (含稳态解):&lt;/strong&gt;
+$$ u = \underbrace{C_0}_{\color{red}{\text{最终平衡温度}}} + \sum_{n=1}^\infty C_n e^{-\left(\frac{n\pi a}{l}\right)^2 t} \cos \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-一固一游-mixed"&gt;3. 一固一游 (Mixed)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u(0)=0, u_x(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $\sin \frac{(2n+1)\pi x}{2l}$ (半奇数倍)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解:&lt;/strong&gt;
+$$ u = \sum_{n=0}^\infty (T_n(t)) \sin \frac{(2n+1)\pi x}{2l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解:&lt;/strong&gt;
+$$ u = \sum_{n=0}^\infty C_n e^{-\left(\frac{(2n+1)\pi a}{2l}\right)^2 t} \sin \frac{(2n+1)\pi x}{2l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第二部分二维拉普拉斯方程直角坐标"&gt;第二部分：二维拉普拉斯方程（直角坐标）
+&lt;/h3&gt;&lt;p&gt;方程：$u_{xx} + u_{yy} = 0$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解题铁律：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;看边界：哪两个平行的边界条件是 &lt;strong&gt;0（齐次）&lt;/strong&gt;？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;齐次方向&lt;/strong&gt;选三角函数 ($\sin, \cos$) $\rightarrow$ 产生固有值 $\lambda_n$。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;非齐次方向&lt;/strong&gt;选双曲函数 ($\sinh, \cosh$) 或指数函数 ($e^y, e^{-y}$) $\rightarrow$ 为了凑边界。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="情形-a左右为-0-x0-xa-是齐次"&gt;情形 A：左右为 0 ($x=0, x=a$ 是齐次)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;$X(x)$ 方向：$\sin \frac{n\pi x}{a}$&lt;/li&gt;
+&lt;li&gt;$Y(y)$ 方向：$A_n \cosh \frac{n\pi y}{a} + B_n \sinh \frac{n\pi y}{a}$ (或者 $C_n e^{\dots} + D_n e^{-\dots}$)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(x,y) = \sum_{n=1}^\infty \left( A_n \cosh \frac{n\pi y}{a} + B_n \sinh \frac{n\pi y}{a} \right) \sin \frac{n\pi x}{a} $$
+&lt;em&gt;(系数 $A_n, B_n$ 由上下两边的非齐次条件定)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="情形-b上下为-0-y0-yb-是齐次"&gt;情形 B：上下为 0 ($y=0, y=b$ 是齐次)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;$Y(y)$ 方向：$\sin \frac{n\pi y}{b}$&lt;/li&gt;
+&lt;li&gt;$X(x)$ 方向：双曲函数&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(x,y) = \sum_{n=1}^\infty \left( A_n \cosh \frac{n\pi x}{b} + B_n \sinh \frac{n\pi x}{b} \right) \sin \frac{n\pi y}{b} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="情形-c四周都有值-叠加原理"&gt;情形 C：四周都有值 (叠加原理)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;如果矩形四边都不是 0，必须把问题拆成两个子问题（A + B），分别求解后再相加。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第三部分二维拉普拉斯方程极坐标"&gt;第三部分：二维拉普拉斯方程（极坐标）
+&lt;/h3&gt;&lt;p&gt;方程：$\Delta u = 0$
+通用原料：$r^n, r^{-n}, \ln r, \text{const}$ 和 $\sin n\theta, \cos n\theta$。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;分类依据：区域是否包含圆心 ($0$) 和无穷远 ($\infty$)。&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id="1-圆内问题-r--a"&gt;1. 圆内问题 ($r &amp;lt; a$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; $\ln r$ (在0处无穷), $r^{-n}$ (在0处无穷)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = \frac{A_0}{2} + \sum_{n=1}^\infty r^n (A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;(这是最常用的泊松积分公式的前身)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-圆外问题-r--a"&gt;2. 圆外问题 ($r &amp;gt; a$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; $r^n$ (在$\infty$处发散), $\ln r$ (通常去除，除非有源)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = \frac{A_0}{2} + \sum_{n=1}^\infty \frac{1}{r^n} (A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-圆环问题-a--r--b"&gt;3. 圆环问题 ($a &amp;lt; r &amp;lt; b$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; 无。所有项都保留。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = A_0 + B_0 \ln r + \sum_{n=1}^\infty (C_n r^n + D_n r^{-n})(A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="终极速查表-cheat-sheet"&gt;终极速查表 (Cheat Sheet)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;方程与坐标&lt;/th&gt;
+&lt;th style="text-align: left"&gt;关键特征&lt;/th&gt;
+&lt;th style="text-align: left"&gt;解的主要形式 (级数项)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;弦振动 (1D)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;波动&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$T(t) \cdot X(x)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$X(x)$ 定基底，&lt;strong&gt;$T(t)$ 是正余弦&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;热传导 (1D)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;扩散&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$T(t) \cdot X(x)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$X(x)$ 定基底，&lt;strong&gt;$T(t)$ 是指数衰减&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (直角)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;稳态&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Trig(齐次向) $\cdot$ Hyperbolic(非齐次向)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;一边 $\sin$，另一边 $\sinh/\cosh$&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (圆内)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;极坐标&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$r^n \cdot (A\cos + B\sin)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;去掉 $r^{-n}$ 和 $\ln r$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (圆外)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;极坐标&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$r^{-n} \cdot (A\cos + B\sin)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;去掉 $r^n$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;做题套路总结：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;定方程：&lt;/strong&gt; 决定了时间项 ($T$) 还是双曲项 ($Y$)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;看边界 (x/齐次方向)：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;$0, 0 \rightarrow \sin$&lt;/li&gt;
+&lt;li&gt;$0&amp;rsquo;, 0&amp;rsquo; \rightarrow \cos$ (注意 $n=0$ 常数项)&lt;/li&gt;
+&lt;li&gt;$0, 0&amp;rsquo; \rightarrow \sin((n+0.5)\dots)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;看区域 (极坐标)：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;有圆心 $\rightarrow$ 留 $r^n$&lt;/li&gt;
+&lt;li&gt;有无穷 $\rightarrow$ 留 $r^{-n}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>

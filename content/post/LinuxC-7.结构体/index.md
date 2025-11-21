@@ -108,7 +108,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-## q2 预测一下两段代码结果，思考enum与宏定义的差异
+## q2: 预测一下两段代码结果，思考enum与宏定义的差异
 
 ```c
 
@@ -121,6 +121,9 @@ int main(void) {
   return 0;
 }
 
+//输出： 垃圾值，2
+//解释：enum在全局定义，会以局部变量定义
+
 //code2 
 #include <stdio.h>
 int main(void) {
@@ -129,4 +132,10 @@ int main(void) {
   printf("%d %d\n", RECTANGULAR, POLAR);
   return 0;
 }
+
+//结果：报错
+//解释:命名冲突
 ```
+
+ - 枚举：在编译阶段处理，有定义域，枚举值存在于编译器的符号表里，编译后直接变成了机器指令里的数字，不占用数据内存空间。
+- 宏：在预处理阶段处理，直接替换

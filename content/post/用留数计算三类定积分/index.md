@@ -3,7 +3,7 @@ title: "用留数计算三类定积分"
 description: 
 date: 2025-11-26T20:37:36+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: false

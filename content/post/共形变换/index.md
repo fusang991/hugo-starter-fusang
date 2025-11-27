@@ -3,7 +3,7 @@ title: "共形变换"
 description: 
 date: 2025-11-26T20:16:58+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: false

@@ -3,7 +3,7 @@ title: "复变函数最后复习"
 description: 
 date: 2025-11-28T21:03:30+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: false

@@ -6,7 +6,7 @@ image:
 math: 
 license: 
 hidden: false
-comments: true
+comments: false
 draft: false
 categories:
     - c++

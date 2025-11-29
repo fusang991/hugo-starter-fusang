@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+categories:
+    - c++
 ---
 
 c++的编译过程：预处理，编译，汇编，链接

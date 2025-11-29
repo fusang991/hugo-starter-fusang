@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>复变函数 on fusang blog</title><link>https://demo.stack.jimmycai.com/categories/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/</link><description>Recent content in 复变函数 on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 28 Nov 2025 21:03:30 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0/index.xml" rel="self" type="application/rss+xml"/><item><title>复变函数最后复习</title><link>https://demo.stack.jimmycai.com/post/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%9C%80%E5%90%8E%E5%A4%8D%E4%B9%A0/</link><pubDate>Fri, 28 Nov 2025 21:03:30 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E5%A4%8D%E5%8F%98%E5%87%BD%E6%95%B0%E6%9C%80%E5%90%8E%E5%A4%8D%E4%B9%A0/</guid><description>&lt;p&gt;收到。这不仅是一次简单的整合，更是一次根据你最新的&lt;strong&gt;复习侧重点（20分共形映射+基础概念挖根）&lt;strong&gt;进行的&lt;/strong&gt;战略升级&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;我将原来的&lt;strong&gt;基础篇&lt;/strong&gt;与&lt;strong&gt;进阶篇&lt;/strong&gt;完美融合，并针对&lt;strong&gt;共形映射&lt;/strong&gt;进行了地毯式加固，同时严格执行你的要求：&lt;strong&gt;每一个定理都要拷问其成立的前提条件&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;这是一份针对《复变函数》全书概念的&lt;strong&gt;终极质检单&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="第一部分初等函数与复数基础地基篇"&gt;第一部分：初等函数与复数基础（地基篇）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;1. 指数函数 $e^z$&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;周期性&lt;/strong&gt;：$e^z$ 的周期是多少？（注意：是 $2\pi$ 还是 $2\pi i$？）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;非零性&lt;/strong&gt;：方程 $e^z = 0$ 有解吗？&lt;strong&gt;条件&lt;/strong&gt;：在有限复平面内，为什么它永远不等于零？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;模与角&lt;/strong&gt;：$|e^{x+iy}|$ 仅由实部 $x$ 决定吗？$\text{Arg}(e^{x+iy})$ 仅由虚部 $y$ 决定吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;映射&lt;/strong&gt;：$w=e^z$ 将带状区域 $0 &amp;lt; y &amp;lt; \pi$ 映射为什么区域？（是整个上半平面吗？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;2. 对数与幂函数&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;多值性&lt;/strong&gt;：$\text{Ln } z$ 的多值性来源于哪一个几何量（幅角）的不确定性？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;主值支解析条件&lt;/strong&gt;：$\ln z$（主值）在负实轴及原点上解析吗？&lt;strong&gt;条件&lt;/strong&gt;：若要在某个区域内谈 $\ln z$ 的解析分支，该区域必须满足什么几何特征？（不能包含什么？）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;幂函数定义&lt;/strong&gt;：$z^a$ 的严格定义是什么？它是单值的还是多值的？&lt;strong&gt;条件&lt;/strong&gt;：当 $a$ 满足什么条件时，$z^a$ 才是单值函数？（整数？有理数？复数？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第二部分导数解析与调和函数微积分基础"&gt;第二部分：导数、解析与调和函数（微积分基础）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;3. C-R 方程与可导&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;C-R 方程&lt;/strong&gt;：$u_x, u_y, v_x, v_y$ 必须满足什么关系？（背诵！）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;充分性陷阱&lt;/strong&gt;：仅仅满足 C-R 方程就能保证函数可导吗？&lt;strong&gt;条件&lt;/strong&gt;：偏导数本身还需要满足什么性质？（是否需要连续？）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解析的定义&lt;/strong&gt;：$f(z)$ 在 $z_0$ 点解析，是指仅在该点可导，还是要在该点的某个&lt;strong&gt;邻域&lt;/strong&gt;内处处可导？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;4. 调和函数&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;定义&lt;/strong&gt;：满足什么方程的函数叫调和函数？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;共轭条件&lt;/strong&gt;：如果 $v$ 是 $u$ 的共轭调和函数，即 $u+iv$ 解析。那么 $u$ 是 $v$ 的共轭调和函数吗？（提示：符号是否要变？）&lt;strong&gt;条件&lt;/strong&gt;：构造解析函数的前提是 $u$ 和 $v$ 所在的区域必须是什么类型的？（单连通？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第三部分复积分计算工具库"&gt;第三部分：复积分（计算工具库）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;5. 积分基础与牛顿-莱布尼茨公式&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;路径无关性&lt;/strong&gt;：在什么条件下，积分与路径无关？&lt;strong&gt;条件&lt;/strong&gt;：区域 $D$ 需要是单连通吗？函数 $f(z)$ 需解析吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;牛顿-莱布尼茨公式&lt;/strong&gt;：$\int_a^b f(z)dz = F(b) - F(a)$。&lt;strong&gt;条件&lt;/strong&gt;：$f(z)$ 在路径所在的单连通区域内不仅要连续，还必须具有什么（原函数）？或者说必须是&lt;strong&gt;解析&lt;/strong&gt;的吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;6. 柯西-古萨（Cauchy-Goursat）定理&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;零值判据&lt;/strong&gt;：$\oint_C f(z)dz = 0$。&lt;strong&gt;条件&lt;/strong&gt;：
+&lt;ol&gt;
+&lt;li&gt;$C$ 是简单的闭曲线。&lt;/li&gt;
+&lt;li&gt;$f(z)$ 在 $C$ 的&lt;strong&gt;内部&lt;/strong&gt;以及&lt;strong&gt;边界&lt;/strong&gt;上，都必须满足什么性质？（少一个点解析行不行？）&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;7. 柯西积分公式（及其高阶导数）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;基本公式&lt;/strong&gt;：$f(z_0) = \frac{1}{2\pi i} \oint_C \frac{f(z)}{z-z_0} dz$。&lt;strong&gt;条件&lt;/strong&gt;：$z_0$ 必须在 $C$ 的哪一侧？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;高阶形式&lt;/strong&gt;：求 $n$ 阶导数时，被积函数分母的幂次是 $n$ 还是 $n+1$？前面的系数有一项阶乘，是 $n!$ 吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;8. 平均值定理与柯西不等式&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;平均值定理&lt;/strong&gt;：解析函数在圆心的值 $f(z_0)$ 等于它在圆周上取值的积分平均吗？&lt;strong&gt;条件&lt;/strong&gt;：整个圆面（含边界）内必须解析吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;柯西不等式&lt;/strong&gt;：$|f^{(n)}(z_0)| \le \frac{n! M}{R^n}$。这里 $M$ 是什么？$R$ 是什么？这个不等式常用于证明刘维尔定理，这暗示了&lt;strong&gt;有界整函数&lt;/strong&gt;只能是什么函数？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第四部分级数与留数解题核心"&gt;第四部分：级数与留数（解题核心）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;9. Taylor 与 Laurent 级数&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;展开唯一性&lt;/strong&gt;：同一个函数在不同圆环域内的 Laurent 展开式相同吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;收敛域形态&lt;/strong&gt;：Taylor 级数的收敛域一定是圆吗？Laurent 级数的收敛域一定是圆环吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;10. 奇点与留数&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;奇点分类&lt;/strong&gt;：$\lim_{z \to z_0} f(z)$ 不存在且有界，这是不可能的。如果极限不存在且不为 $\infty$，是什么奇点？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;计算公式&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;如果是单极点，$Res = \lim (z-z_0)f(z)$。&lt;/li&gt;
+&lt;li&gt;如果是 $P/Q$ 型单极点，公式是 $P(z_0)/Q&amp;rsquo;(z_0)$ 吗？&lt;strong&gt;条件&lt;/strong&gt;：$Q&amp;rsquo;(z_0)$ 能等于 0 吗？&lt;/li&gt;
+&lt;li&gt;如果是 $m$ 阶极点，极限式中导数要在这个基础上求几阶？（$m-1$阶？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第五部分共形映射20分重点---必须死磕"&gt;第五部分：共形映射（&lt;strong&gt;20分重点 - 必须死磕&lt;/strong&gt;）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;11. 共形映射的定义&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;几何特征&lt;/strong&gt;：所谓“共形”，必须同时满足哪两个性质？（&lt;strong&gt;保角性&lt;/strong&gt;和&lt;strong&gt;保伸缩率性&lt;/strong&gt;？）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;判别据&lt;/strong&gt;：$w=f(z)$ 在 $z_0$ 实现共形映射的充要条件是什么？&lt;strong&gt;条件&lt;/strong&gt;：1. 解析。2. 导数 $f&amp;rsquo;(z_0) \neq$ 多少？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方向性&lt;/strong&gt;：解析变换保持角度的大小和&lt;strong&gt;旋转方向&lt;/strong&gt;，如果是 $\bar{z}$ 这样的共轭变换，保角但方向如何？它是共形映射吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;12. 分式线性变换 (L.F.T/Möbius)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;定义式&lt;/strong&gt;：$w = \frac{az+b}{cz+d}$。&lt;strong&gt;条件&lt;/strong&gt;：为保证不是常数，$ad-bc$ 必须满足什么条件？（不为零）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;保圆性&lt;/strong&gt;：为什么说它一定把“圆变为圆”？&lt;strong&gt;条件&lt;/strong&gt;：在复数域中，直线被视作半径无穷大的圆吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;三点定式&lt;/strong&gt;：任给 $z$ 平面三点到 $w$ 平面三点的映射是&lt;strong&gt;唯一&lt;/strong&gt;确定的吗？这通常是解题的通法。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;13. 两个核心映射模型（必背！）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;单位圆到单位圆&lt;/strong&gt;：把 $|z|&amp;lt;1$ 映射为 $|w|&amp;lt;1$ 的一般形式是 $w = e^{i\theta} \frac{z-a}{1-\bar{a}z}$。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;理解&lt;/strong&gt;：这里的 $a$ 是 $z$ 平面内部哪个点被映射到了 $w$ 平面的原点？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;边界&lt;/strong&gt;：圆周 $|z|=1$ 上的点模长计算结果一定是 1 吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;上半平面到单位圆&lt;/strong&gt;：把 Im $z &amp;gt; 0$ 映射为 $|w|&amp;lt;1$ 的一般形式是 $w = e^{i\theta} \frac{z-a}{z-\bar{a}}$。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;条件&lt;/strong&gt;：参数 $a$ 的虚部必须满足 Im $a &amp;gt; 0$ 吗？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;理解&lt;/strong&gt;：$z-\bar{a}$ 在分母，意味着下半平面的点 $\bar{a}$ 成了奇点，这点合理吗？（映射区域不含奇点）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;14. 幂函数与其他初等映射（预处理）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;角形域处理&lt;/strong&gt;：如果要处理一个顶角为 $\alpha$ 的角形区域（比如第一象限 $\alpha = \pi/2$），应该先用什么幂函数 $w=z^k$ 把它“拉”成上半平面？（$k$ 与 $\alpha$ 的关系是 $k = \pi / \alpha$ 吗？）&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;带状域处理&lt;/strong&gt;：将无穷长带状区域转化，通常使用指数函数 $e^z$ 还是对数函数？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第六部分积分变换高频考点"&gt;第六部分：积分变换（高频考点）
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;15. Fourier 变换&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;常见函数&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;$\delta(t)$ 的傅里叶变换是 1。&lt;/li&gt;
+&lt;li&gt;常数 $1$ 的傅里叶变换是 $2\pi\delta(\omega)$ 吗？&lt;/li&gt;
+&lt;li&gt;$e^{-a|t|} (a&amp;gt;0)$ 的变换结果是洛伦兹线型（$ \frac{2a}{\omega^2 + a^2}$）吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;微分性质&lt;/strong&gt;：$f&amp;rsquo;(t) \leftrightarrow i\omega F(\omega)$。&lt;strong&gt;条件&lt;/strong&gt;：这是在时域求导对应频域乘算子吗？&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;16. Laplace 变换&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;常见函数&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;阶跃函数 $u(t)$ 的变换是 $1/s$ 吗？&lt;/li&gt;
+&lt;li&gt;$e^{at}$ 的变换是 $\frac{1}{s-a}$ 吗？&lt;/li&gt;
+&lt;li&gt;$\sin \omega t$ 和 $\cos \omega t$ 的变换分母都是 $s^2+\omega^2$，分子分别是什么？（一个是 $\omega$，一个是 $s$，哪个对哪个？）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解微分方程&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;导数性质：$\mathcal{L}[y&amp;rsquo;] = sY(s) - y(0)$，那么 $\mathcal{L}[y&amp;rsquo;&amp;rsquo;]$ 等于什么？别忘了减去初值项 $s y(0)$ 和 $y&amp;rsquo;(0)$。&lt;/li&gt;
+&lt;li&gt;求解逻辑：1. 变换变代数方程 -&amp;gt; 2. 解出 $Y(s)$ -&amp;gt; 3. &lt;strong&gt;?&lt;/strong&gt; (最后一步一定要进行什么变换？逆变换回到 $t$ 域)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;最后嘱咐：&lt;/strong&gt;
+请对照着这个列表，盖上右边的答案（或者心理预期的答案），如果对于任何一个“条件”或者“公式细节”有迟疑，不要猜测，立刻去查书上那一行的&lt;strong&gt;原文&lt;/strong&gt;。概念题的陷阱就在“非零”、“单连通”、“边界含不含”这些细节里。祝复习顺利！&lt;/p&gt;</description></item><item><title>用留数计算三类定积分</title><link>https://demo.stack.jimmycai.com/post/%E7%94%A8%E7%95%99%E6%95%B0%E8%AE%A1%E7%AE%97%E4%B8%89%E7%B1%BB%E5%AE%9A%E7%A7%AF%E5%88%86/</link><pubDate>Wed, 26 Nov 2025 20:37:36 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E7%94%A8%E7%95%99%E6%95%B0%E8%AE%A1%E7%AE%97%E4%B8%89%E7%B1%BB%E5%AE%9A%E7%A7%AF%E5%88%86/</guid><description>&lt;p&gt;这张PPT展示了留数定理在计算实积分时的三种最经典应用场景。这三类积分在复变函数考试中是必考内容。&lt;/p&gt;
+&lt;p&gt;为了方便你理解和记忆，我将这三类积分的核心思路、变换公式和记忆口诀总结如下：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="一-三角函数积分-单位圆法"&gt;一、 三角函数积分 (单位圆法)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;形式&lt;/strong&gt;：$\displaystyle \int_0^{2\pi} R(\cos \theta, \sin \theta) d\theta$
+（特点：积分区间是 $0$ 到 $2\pi$，被积函数是有理三角函数）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;核心逻辑&lt;/strong&gt;：
+把实数积分转化为复平面&lt;strong&gt;单位圆 ($|z|=1$)&lt;/strong&gt; 上的围道积分。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;变换公式 (背诵)&lt;/strong&gt;：
+令 $z = e^{i\theta}$，则：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;微分换元&lt;/strong&gt;：$d\theta = \frac{dz}{iz}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;余弦换元&lt;/strong&gt;：$\cos \theta = \frac{z + z^{-1}}{2} = \frac{z^2+1}{2z}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;正弦换元&lt;/strong&gt;：$\sin \theta = \frac{z - z^{-1}}{2i} = \frac{z^2-1}{2iz}$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;计算公式&lt;/strong&gt;：
+&lt;/p&gt;
+$$ \text{原积分} = 2\pi i \sum \text{Res}[f(z), z_k] $$&lt;p&gt;
+&lt;em&gt;注意：这里的 $z_k$ 必须是位于&lt;strong&gt;单位圆内部&lt;/strong&gt; ($|z_k|&amp;lt;1$) 的极点。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;记忆口诀&lt;/strong&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;区间二派做代换，单位圆内找极点。&lt;/strong&gt;
+&lt;strong&gt;$d\theta$ 变 $dz$ 除 $iz$，三角全变 $z$ 分式。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h3 id="二-无穷区间有理积分-上半平面法"&gt;二、 无穷区间有理积分 (上半平面法)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;形式&lt;/strong&gt;：$\displaystyle \int_{-\infty}^{+\infty} R(x) dx = \int_{-\infty}^{+\infty} \frac{P(x)}{Q(x)} dx$
+（特点：上下限是无穷，且 $R(x)$ 是分式）&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;收敛条件&lt;/strong&gt;：分母次数比分子至少高 2 次 ($n \ge m+2$)，且实轴上无奇点。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;核心逻辑&lt;/strong&gt;：
+补上一个上半平面的大半圆，利用大圆弧积分趋于 0 (大圆引理)，将实轴积分转化为闭合回路积分。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计算公式&lt;/strong&gt;：
+&lt;/p&gt;
+$$ \int_{-\infty}^{+\infty} R(x) dx = 2\pi i \sum \text{Res}[R(z), z_k] $$&lt;p&gt;
+&lt;em&gt;注意：这里的 $z_k$ 必须是位于&lt;strong&gt;上半平面&lt;/strong&gt; ($\text{Im } z &amp;gt; 0$) 的极点。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;记忆口诀&lt;/strong&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;上下无穷做有理，分母高二无顾虑。&lt;/strong&gt;
+&lt;strong&gt;只取上半平面点，二派 $i$ 乘留数和。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h3 id="三-傅里叶型积分-若丹引理法"&gt;三、 傅里叶型积分 (若丹引理法)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;形式&lt;/strong&gt;：$\displaystyle \int_{-\infty}^{+\infty} R(x) e^{iax} dx \quad (a&amp;gt;0)$
+或者 $\int_{-\infty}^{+\infty} R(x) \cos(ax) dx$ 及 $\int_{-\infty}^{+\infty} R(x) \sin(ax) dx$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;收敛条件&lt;/strong&gt;：分母次数比分子至少高 1 次 ($n \ge m+1$)。这是比第二类更宽松的条件，因为 $e^{iax}$ 提供了衰减。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;核心逻辑&lt;/strong&gt;：
+利用 $e^{iaz}$ 在上半平面的衰减特性（若丹引理），同样补上半圆。如果是求 $\cos$ 或 $\sin$ 的积分，最后取实部或虚部即可。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;计算公式&lt;/strong&gt;：
+&lt;/p&gt;
+$$ \int_{-\infty}^{+\infty} R(x) e^{iax} dx = 2\pi i \sum \text{Res}[R(z)e^{iaz}, z_k] $$&lt;p&gt;
+&lt;em&gt;注意：&lt;/em&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;em&gt;只找&lt;strong&gt;上半平面&lt;/strong&gt;的极点。&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;计算留数时，千万别忘了把 $e^{iaz}$ 带进去算！&lt;/em&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;记忆口诀&lt;/strong&gt;：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;震荡因子 $e$ 指数，若丹引理来相助。&lt;/strong&gt;
+&lt;strong&gt;分母高一就能积，千万别忘乘 $e^{iz}$。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h3 id="总结对比表-考前必看"&gt;总结对比表 (考前必看)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;类型&lt;/th&gt;
+&lt;th style="text-align: left"&gt;积分区间&lt;/th&gt;
+&lt;th style="text-align: left"&gt;关键代换/方法&lt;/th&gt;
+&lt;th style="text-align: left"&gt;极点选择范围&lt;/th&gt;
+&lt;th style="text-align: left"&gt;结果系数&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;三角型&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$[0, 2\pi]$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$z=e^{i\theta}$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;单位圆内&lt;/strong&gt; ($&lt;/td&gt;
+&lt;td style="text-align: left"&gt;z&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;有理型&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$(-\infty, +\infty)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;大圆围道&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;上半平面&lt;/strong&gt; ($\text{Im } z &amp;gt; 0$)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$2\pi i$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;震荡型&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$(-\infty, +\infty)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;乘 $e^{iax}$ + 若丹引理&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;上半平面&lt;/strong&gt; ($\text{Im } z &amp;gt; 0$)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$2\pi i$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;特别提醒：&lt;/strong&gt;
+如果是 $\int_{-\infty}^{+\infty} R(x) \cos(ax) dx$，做题时要先计算 $\int_{-\infty}^{+\infty} R(x) e^{iax} dx$，算出复数结果后，&lt;strong&gt;取实部 (Re)&lt;/strong&gt; 才是最终答案。&lt;/p&gt;</description></item><item><title>共形变换</title><link>https://demo.stack.jimmycai.com/post/%E5%85%B1%E5%BD%A2%E5%8F%98%E6%8D%A2/</link><pubDate>Wed, 26 Nov 2025 20:16:58 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E5%85%B1%E5%BD%A2%E5%8F%98%E6%8D%A2/</guid><description>&lt;p&gt;没问题，听你的建议！既然儒可夫斯基变换超纲，那我们就把它删掉，把火力集中在&lt;strong&gt;分式线性映射&lt;/strong&gt;这个“绝对核心”上，并辅以幂函数和指数函数。&lt;/p&gt;
+&lt;p&gt;分式线性映射是复变函数考试中&lt;strong&gt;最灵活、考法最多&lt;/strong&gt;的部分，确实值得“深挖”。这里为你整理一份加强版的总结：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="一-绝对核心分式线性映射-möbius-transformation"&gt;一、 绝对核心：分式线性映射 (Möbius Transformation)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;通式&lt;/strong&gt;：&lt;/p&gt;
+$$w = \frac{az+b}{cz+d} \quad (ad-bc \neq 0)$$&lt;p&gt;&lt;strong&gt;核心性质（保圆性）&lt;/strong&gt;：它将扩充复平面上的**“广义圆”&lt;strong&gt;（圆或直线）映射为&lt;/strong&gt;“广义圆”**。&lt;/p&gt;
+&lt;h4 id="1-两个必背的标准映射公式"&gt;1. 两个“必背”的标准映射公式
+&lt;/h4&gt;&lt;p&gt;考试中，如果题目没有强制要求用三点法，直接套用这两个公式最快。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;(1) 上半平面 $\leftrightarrow$ 单位圆 （最常考）&lt;/strong&gt;
+将上半平面 $\text{Im}(z) &amp;gt; 0$ 映射为单位圆 $|w| &amp;lt; 1$。
+&lt;/p&gt;
+$$ w = e^{i\theta} \frac{z - z_0}{z - \bar{z}_0} $$&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;参数含义&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;$z_0$：上半平面内的一点，它被映射为圆心 $w=0$（即 $f(z_0)=0$）。&lt;/li&gt;
+&lt;li&gt;$\theta$：旋转因子，由边界上的点的对应关系确定。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;特例&lt;/strong&gt;：最常用的简单形式是把 $i \to 0$：
+$$ w = \frac{z-i}{z+i} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;(2) 单位圆 $\leftrightarrow$ 单位圆 （圆内自同构）&lt;/strong&gt;
+将单位圆 $|z| &amp;lt; 1$ 映射为单位圆 $|w| &amp;lt; 1$。
+&lt;/p&gt;
+$$ w = e^{i\theta} \frac{z - a}{1 - \bar{a}z} $$&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;参数含义&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;$a$：圆内的一点 ($|a|&amp;lt;1$)，它被映射为圆心 $w=0$。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;易错点&lt;/strong&gt;：注意分母是 $1-\bar{a}z$，不要和上面的公式记混。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id="2-万能钥匙三点定型法交比公式"&gt;2. “万能钥匙”：三点定型法（交比公式）
+&lt;/h4&gt;&lt;p&gt;当题目明确给出边界上的三个点映射到另外三个点（如 $z_1, z_2, z_3 \to w_1, w_2, w_3$）时，使用此公式。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;公式&lt;/strong&gt;：
+&lt;/p&gt;
+$$ \frac{w-w_1}{w-w_2} \cdot \frac{w_3-w_2}{w_3-w_1} = \frac{z-z_1}{z-z_2} \cdot \frac{z_3-z_2}{z_3-z_1} $$&lt;p&gt;&lt;strong&gt;处理 $\infty$ 的规则（重要）：&lt;/strong&gt;
+如果某个点是 $\infty$，则包含该点的分子和分母的那一项&lt;strong&gt;直接划掉（视为1）&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;例子&lt;/em&gt;：如果 $z_1 = \infty$，右边变为 $\frac{z_3-z_2}{z-z_2}$。&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;例子&lt;/em&gt;：如果 $w_2 = \infty$，左边变为 $\frac{w-w_1}{w_3-w_1}$。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id="3-判断映射方向的神器保域性与定向原则"&gt;3. 判断映射方向的“神器”：保域性与定向原则
+&lt;/h4&gt;&lt;p&gt;算出解析式后，如何确定是映射到了圆内还是圆外？&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;定向原则（右手定则/左手定则）&lt;/strong&gt;：
+当你沿着边界的正方向走时，如果区域在你的&lt;strong&gt;左边&lt;/strong&gt;，那么映射后，区域依然在边界的&lt;strong&gt;左边&lt;/strong&gt;。
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;应用&lt;/em&gt;：比如把 $z$ 平面实轴上的 $-1, 0, 1$ 映射为 $w$ 平面单位圆上的 $-i, 1, i$。你在 $z$ 轴上从左向右走（$-1 \to 0 \to 1$），上半平面在左边。看 $w$ 平面，$-i \to 1 \to i$ 是逆时针，圆内也在左边。说明映射的是内部。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id="4-对称点原理symmetry-principle"&gt;4. 对称点原理（Symmetry Principle）
+&lt;/h4&gt;&lt;p&gt;这是解高难度题的捷径。
+&lt;strong&gt;原理&lt;/strong&gt;：关于边界对称的两个点 $z_1, z_2$，映射后 $w_1, w_2$ 依然关于新边界对称。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;直线的对称点&lt;/strong&gt;：就是几何镜面对称（共轭）。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;圆的对称点&lt;/strong&gt;：$z$ 和 $z^&lt;em&gt;$ 关于圆心为 $a$、半径为 $R$ 的圆对称，满足 $(z-a)(\overline{z^&lt;/em&gt;-a}) = R^2$。特别地，关于单位圆，对称点互为倒数的共轭 $z^* = 1/\bar{z}$。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;考题应用&lt;/strong&gt;：
+如果题目说把上半平面映射成单位圆，且 $f(i) = 0$。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;因为 $i$ 映射到圆心 $0$。&lt;/li&gt;
+&lt;li&gt;$i$ 关于实轴（边界）的对称点是 $-i$。&lt;/li&gt;
+&lt;li&gt;所以 $-i$ 必须映射到 $0$ 关于单位圆（边界）的对称点 $\infty$。&lt;/li&gt;
+&lt;li&gt;立刻就能写出因子：分子有 $(z-i)$，分母有 $(z+i)$。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="二-辅助工具幂函数与指数函数"&gt;二、 辅助工具：幂函数与指数函数
+&lt;/h3&gt;&lt;p&gt;这两类函数主要负责**“整形”&lt;strong&gt;，把不规则区域变成可以用分式线性映射处理的&lt;/strong&gt;上半平面**。&lt;/p&gt;
+&lt;h4 id="1-幂函数-w--zmu-调整角度"&gt;1. 幂函数 $w = z^\mu$ （调整角度）
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：把顶点在原点的角形域（扇形）张开或合拢。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式&lt;/strong&gt;：若区域为角 $\alpha &amp;lt; \arg z &amp;lt; \beta$（张角为 $\varphi = \beta-\alpha$），想把它变成上半平面（张角 $\pi$）。
+$$ w = e^{-i\alpha \cdot \frac{\pi}{\varphi}} \cdot z^{\frac{\pi}{\varphi}} $$
+&lt;em&gt;(通常只要旋转到第一边与实轴重合，然后直接乘倍数即可)&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常用速查&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;第一象限 $\to$ 上半平面：$w = z^2$&lt;/li&gt;
+&lt;li&gt;上半圆（半圆盘） $\to$ 第一象限：先用分式线性映射把半圆变直角，再用幂函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-指数函数-w--elambda-z-带形变半面"&gt;2. 指数函数 $w = e^{\lambda z}$ （带形变半面）
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;功能&lt;/strong&gt;：把平行带形区域映射为角形域或半平面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式&lt;/strong&gt;：对于宽度为 $h$ 的带形域。
+$$ w = e^{\frac{\pi}{h} z} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;常用速查&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;带形 $0 &amp;lt; \text{Im}(z) &amp;lt; \pi$ $\to$ 上半平面：$w = e^z$&lt;/li&gt;
+&lt;li&gt;带形 $0 &amp;lt; \text{Im}(z) &amp;lt; h$ $\to$ 上半平面：$w = e^{\frac{\pi z}{h}}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="考试通用解题流程"&gt;考试通用解题流程
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;看形状&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;是扇形？&lt;/strong&gt; $\to$ 用幂函数 $z^\mu$ 变成上半平面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;是带子？&lt;/strong&gt; $\to$ 用指数 $e^z$ 变成上半平面。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;是两个圆弧围成的月牙/眼睛？&lt;/strong&gt; $\to$ 用分式线性映射，把两个交点分别送到 $0$ 和 $\infty$，把它变成角形域，再用幂函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;最后一步（定型）&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;现在你手里一定是&lt;strong&gt;上半平面&lt;/strong&gt;了。&lt;/li&gt;
+&lt;li&gt;如果题目要上半平面，收工。&lt;/li&gt;
+&lt;li&gt;如果题目要&lt;strong&gt;单位圆&lt;/strong&gt;，用标准公式 $w = \frac{z-z_0}{z-\bar{z}_0}$ 收工。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>

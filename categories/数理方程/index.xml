@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>数理方程 on fusang blog</title><link>https://demo.stack.jimmycai.com/categories/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B/</link><description>Recent content in 数理方程 on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 28 Nov 2025 15:52:53 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B/index.xml" rel="self" type="application/rss+xml"/><item><title>数理方程达朗贝尔公式</title><link>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E8%BE%BE%E6%9C%97%E8%B4%9D%E5%B0%94%E5%85%AC%E5%BC%8F/</link><pubDate>Fri, 28 Nov 2025 15:52:53 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E8%BE%BE%E6%9C%97%E8%B4%9D%E5%B0%94%E5%85%AC%E5%BC%8F/</guid><description>&lt;p&gt;这是一份关于数理方程课程中&lt;strong&gt;一维波动方程（弦振动方程）&lt;strong&gt;的&lt;/strong&gt;行波法&lt;/strong&gt;与&lt;strong&gt;达朗贝尔公式&lt;/strong&gt;的复习总结。&lt;/p&gt;
+&lt;p&gt;这份总结按照“定解问题 $\to$ 通解（行波法）$\to$ 特解（达朗贝尔公式）$\to$ 物理意义”的逻辑整理，适合期末复习或梳理思路。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="一-定解问题模型-the-cauchy-problem"&gt;一、 定解问题模型 (The Cauchy Problem)
+&lt;/h3&gt;&lt;p&gt;我们研究的是&lt;strong&gt;无界弦&lt;/strong&gt;（无限长）的自由振动问题，数学上称为&lt;strong&gt;柯西问题（初值问题）&lt;/strong&gt;：&lt;/p&gt;
+$$
+\begin{cases}
+\frac{\partial^2 u}{\partial t^2} = a^2 \frac{\partial^2 u}{\partial x^2} &amp; (-\infty &lt; x &lt; \infty, t &gt; 0) \quad \text{(泛定方程)} \\
+u(x, 0) = \phi(x) &amp; (-\infty &lt; x &lt; \infty) \quad \text{(初始位移)} \\
+\frac{\partial u}{\partial t}(x, 0) = \psi(x) &amp; (-\infty &lt; x &lt; \infty) \quad \text{(初始速度)}
+\end{cases}
+$$&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;$u(x,t)$&lt;/strong&gt;: 代表位移。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;$a$&lt;/strong&gt;: 波速，物理上 $a = \sqrt{T/\rho}$（$T$为张力，$\rho$为线密度）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="二-行波法-method-of-traveling-waves"&gt;二、 行波法 (Method of Traveling Waves)
+&lt;/h3&gt;&lt;p&gt;行波法的核心思想是通过&lt;strong&gt;特征变换&lt;/strong&gt;，将二阶偏微分方程化简，从而求出&lt;strong&gt;通解&lt;/strong&gt;。&lt;/p&gt;
+&lt;h4 id="1-特征线与变量代换"&gt;1. 特征线与变量代换
+&lt;/h4&gt;&lt;p&gt;方程 $u_{tt} - a^2 u_{xx} = 0$ 可以因式分解为算子形式：
+&lt;/p&gt;
+$$(\frac{\partial}{\partial t} - a\frac{\partial}{\partial x})(\frac{\partial}{\partial t} + a\frac{\partial}{\partial x})u = 0$$&lt;p&gt;
+这提示我们要寻找使得 $x \pm at$ 为常数的线，即&lt;strong&gt;特征线&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;引入新变量（特征坐标）：
+&lt;/p&gt;
+$$
+\begin{cases}
+\xi = x + at \\
+\eta = x - at
+\end{cases}
+$$&lt;h4 id="2-化简方程"&gt;2. 化简方程
+&lt;/h4&gt;&lt;p&gt;利用链式法则将关于 $x, t$ 的导数转换为关于 $\xi, \eta$ 的导数，原方程化为标准型：
+&lt;/p&gt;
+$$
+\frac{\partial^2 u}{\partial \xi \partial \eta} = 0
+$$&lt;h4 id="3-积分求通解"&gt;3. 积分求通解
+&lt;/h4&gt;&lt;p&gt;对 $\xi$ 和 $\eta$ 分别积分，得到&lt;strong&gt;达朗贝尔通解&lt;/strong&gt;：
+&lt;/p&gt;
+$$
+u(x, t) = f(x + at) + g(x - at)
+$$&lt;p&gt;
+其中 $f$ 和 $g$ 是任意二阶可微函数。&lt;/p&gt;
+&lt;h4 id="4-物理含义行波"&gt;4. 物理含义：行波
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;$g(x - at)$&lt;/strong&gt;：代表波形保持不变，向 &lt;strong&gt;$x$ 轴正方向（右）&lt;/strong&gt; 传播的波（右行波）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;$f(x + at)$&lt;/strong&gt;：代表波形保持不变，向 &lt;strong&gt;$x$ 轴负方向（左）&lt;/strong&gt; 传播的波（左行波）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：一维波动方程的解是由两列形状不变、方向相反的行波叠加而成的。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="三-达朗贝尔公式-dalemberts-formula"&gt;三、 达朗贝尔公式 (D&amp;rsquo;Alembert&amp;rsquo;s Formula)
+&lt;/h3&gt;&lt;p&gt;行波法给出了通解结构，达朗贝尔公式则是利用&lt;strong&gt;初始条件&lt;/strong&gt;确定具体函数 $f$ 和 $g$，从而得到定解。&lt;/p&gt;
+&lt;h4 id="1-推导过程"&gt;1. 推导过程
+&lt;/h4&gt;&lt;p&gt;利用初始条件 $t=0$ 时：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;位移：$f(x) + g(x) = \phi(x)$&lt;/li&gt;
+&lt;li&gt;速度：$a f&amp;rsquo;(x) - a g&amp;rsquo;(x) = \psi(x)$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;对速度式在 $[0, x]$ 上积分，联立解出 $f(x)$ 和 $g(x)$，最后代回通解表达式。&lt;/p&gt;
+&lt;h4 id="2-公式形式-核心考点"&gt;2. 公式形式 (核心考点)
+&lt;/h4&gt;$$
+u(x, t) = \frac{1}{2}[\phi(x - at) + \phi(x + at)] + \frac{1}{2a} \int_{x - at}^{x + at} \psi(\tau) d\tau
+$$&lt;h4 id="3-公式的物理分解"&gt;3. 公式的物理分解
+&lt;/h4&gt;&lt;p&gt;解由两部分组成：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;第一部分 $\frac{1}{2}[\phi(x - at) + \phi(x + at)]$&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;由&lt;strong&gt;初始位移&lt;/strong&gt; $\phi(x)$ 引起。&lt;/li&gt;
+&lt;li&gt;初始波形一分为二，高度减半，分别向左右传播。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;第二部分 $\frac{1}{2a} \int_{x - at}^{x + at} \psi(\tau) d\tau$&lt;/strong&gt;：
+&lt;ul&gt;
+&lt;li&gt;由&lt;strong&gt;初始速度&lt;/strong&gt; $\psi(x)$ 引起。&lt;/li&gt;
+&lt;li&gt;代表初始冲量对波动的影响，是一个积分累积效应。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="四-物理意义与特征几何-重点理解"&gt;四、 物理意义与特征几何 (重点理解)
+&lt;/h3&gt;&lt;p&gt;理解达朗贝尔公式不仅要会背，还要理解其背后的时空几何意义。&lt;/p&gt;
+&lt;h4 id="1-依赖区域-domain-of-dependence"&gt;1. 依赖区域 (Domain of Dependence)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;问题&lt;/strong&gt;：$M(x_0, t_0)$ 点的解 $u(x_0, t_0)$ 由哪些初始数据决定？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：由 $x$ 轴上区间 $[x_0 - at_0, x_0 + at_0]$ 内的初始数据决定。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;几何&lt;/strong&gt;：过 $M$ 点作两条特征线，与 $x$ 轴围成的三角形称为&lt;strong&gt;特征三角形&lt;/strong&gt;。解完全取决于该三角形底边上的初始值。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;物理意义&lt;/strong&gt;：波速是有限的，远处的扰动还没传过来，不会影响当前点。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-决定区域--影响区域-domain-of-influence"&gt;2. 决定区域 / 影响区域 (Domain of Influence)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;问题&lt;/strong&gt;：$x$ 轴上一点 $P(x_0, 0)$ 的初始扰动会影响时空中的哪些区域？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：会影响由两条特征线 $x - at = x_0$ 和 $x + at = x_0$ 夹角内的扇形区域。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;物理意义&lt;/strong&gt;：扰动以速度 $a$ 向两侧传播，凡是波前扫过的区域都会受到影响。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="五-扩展应用-考试常见变体"&gt;五、 扩展应用 (考试常见变体)
+&lt;/h3&gt;&lt;p&gt;虽然达朗贝尔公式针对的是无界弦，但常用于解决以下变体问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;半无界弦 ($x &amp;gt; 0$) 问题&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;方法&lt;/strong&gt;：&lt;strong&gt;延拓法 (Method of Reflection)&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;固定端 ($u|_{x=0} = 0$)&lt;/strong&gt;：对 $\phi(x)$ 和 $\psi(x)$ 进行&lt;strong&gt;奇延拓&lt;/strong&gt;到 $(-\infty, \infty)$，然后套用达朗贝尔公式。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;自由端 ($u_x|_{x=0} = 0$)&lt;/strong&gt;：对 $\phi(x)$ 和 $\psi(x)$ 进行&lt;strong&gt;偶延拓&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;非齐次方程 ($u_{tt} = a^2 u_{xx} + f(x,t)$)&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;方法&lt;/strong&gt;：&lt;strong&gt;齐次化原理 (Duhamel&amp;rsquo;s Principle / 杜哈梅原理)&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;将非齐次项 $f(x,t)$ 看作在不同时刻加入的“外力”或“初速度”，利用积分叠加达朗贝尔公式求解。&lt;/li&gt;
+&lt;li&gt;解的形式：
+$$u(x,t) = \text{齐次通解} + \frac{1}{2a}\int_0^t \int_{x-a(t-\tau)}^{x+a(t-\tau)} f(\xi, \tau) d\xi d\tau$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="六-总结记忆表"&gt;六、 总结记忆表
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;概念&lt;/th&gt;
+&lt;th style="text-align: left"&gt;核心内容&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;方程&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$u_{tt} = a^2 u_{xx}$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;行波变量&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$\xi = x+at, \quad \eta = x-at$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;通解&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$u = f(x+at) + g(x-at)$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;达朗贝尔公式&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$u = \frac{1}{2}[\phi(x-at) + \phi(x+at)] + \frac{1}{2a}\int_{x-at}^{x+at}\psi(\tau)d\tau$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;核心性质&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;叠加性、有限传播速度、依赖区域、影响区域&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;适用范围&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;一维、无界、波动方程&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</description></item><item><title>数理方程分离变量法</title><link>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95/</link><pubDate>Fri, 21 Nov 2025 15:47:53 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E6%95%B0%E7%90%86%E6%96%B9%E7%A8%8B%E5%88%86%E7%A6%BB%E5%8F%98%E9%87%8F%E6%B3%95/</guid><description>&lt;p&gt;这是一份非常系统的总结需求。掌握这四种情况，基本上就覆盖了本科数理方程考试中&lt;strong&gt;分离变量法&lt;/strong&gt; 90% 的考点。&lt;/p&gt;
+&lt;p&gt;核心逻辑是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;边界条件&lt;/strong&gt;决定了**固有函数（基底）**的形式（是 $\sin$ 还是 $\cos$）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;方程类型&lt;/strong&gt;决定了&lt;strong&gt;时间/另一维度函数&lt;/strong&gt;的形式（是振荡、衰减还是双曲）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="第一部分一维演化方程弦振动-vs-热传导"&gt;第一部分：一维演化方程（弦振动 vs 热传导）
+&lt;/h3&gt;&lt;p&gt;这两种方程的&lt;strong&gt;空间部分（$x$）处理方式完全一样&lt;/strong&gt;，区别仅在于&lt;strong&gt;时间部分（$t$）&lt;/strong&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;弦振动 (Wave):&lt;/strong&gt; $u_{tt} = a^2 u_{xx}$ $\rightarrow$ 时间是振荡的 ($\sin \omega t, \cos \omega t$)，甚至有线性增长 ($t$)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导 (Heat):&lt;/strong&gt; $u_t = a^2 u_{xx}$ $\rightarrow$ 时间是衰减的 ($e^{-k^2 t}$)，或者是常数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="1-两端固定-dirichlet-dirichlet"&gt;1. 两端固定 (Dirichlet-Dirichlet)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u(0)=0, u(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $\sin \frac{n\pi x}{l}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解:&lt;/strong&gt;
+$$ u = \sum_{n=1}^\infty \left( C_n \cos \frac{n\pi a t}{l} + D_n \sin \frac{n\pi a t}{l} \right) \sin \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解:&lt;/strong&gt;
+$$ u = \sum_{n=1}^\infty C_n e^{-\left(\frac{n\pi a}{l}\right)^2 t} \sin \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-两端自由-neumann-neumann--高频考点"&gt;2. 两端自由 (Neumann-Neumann) —— &lt;strong&gt;高频考点&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u_x(0)=0, u_x(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $1$ (对应 $n=0$) 和 $\cos \frac{n\pi x}{l}$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解 (含刚体位移):&lt;/strong&gt;
+$$ u = \underbrace{C_0 + D_0 t}_{\color{red}{n=0 \text{项}}} + \sum_{n=1}^\infty \left( C_n \cos \dots + D_n \sin \dots \right) \cos \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解 (含稳态解):&lt;/strong&gt;
+$$ u = \underbrace{C_0}_{\color{red}{\text{最终平衡温度}}} + \sum_{n=1}^\infty C_n e^{-\left(\frac{n\pi a}{l}\right)^2 t} \cos \frac{n\pi x}{l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-一固一游-mixed"&gt;3. 一固一游 (Mixed)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;BC:&lt;/strong&gt; $u(0)=0, u_x(l)=0$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;基底:&lt;/strong&gt; $\sin \frac{(2n+1)\pi x}{2l}$ (半奇数倍)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;弦振动解:&lt;/strong&gt;
+$$ u = \sum_{n=0}^\infty (T_n(t)) \sin \frac{(2n+1)\pi x}{2l} $$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;热传导解:&lt;/strong&gt;
+$$ u = \sum_{n=0}^\infty C_n e^{-\left(\frac{(2n+1)\pi a}{2l}\right)^2 t} \sin \frac{(2n+1)\pi x}{2l} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第二部分二维拉普拉斯方程直角坐标"&gt;第二部分：二维拉普拉斯方程（直角坐标）
+&lt;/h3&gt;&lt;p&gt;方程：$u_{xx} + u_{yy} = 0$&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解题铁律：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;看边界：哪两个平行的边界条件是 &lt;strong&gt;0（齐次）&lt;/strong&gt;？&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;齐次方向&lt;/strong&gt;选三角函数 ($\sin, \cos$) $\rightarrow$ 产生固有值 $\lambda_n$。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;非齐次方向&lt;/strong&gt;选双曲函数 ($\sinh, \cosh$) 或指数函数 ($e^y, e^{-y}$) $\rightarrow$ 为了凑边界。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id="情形-a左右为-0-x0-xa-是齐次"&gt;情形 A：左右为 0 ($x=0, x=a$ 是齐次)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;$X(x)$ 方向：$\sin \frac{n\pi x}{a}$&lt;/li&gt;
+&lt;li&gt;$Y(y)$ 方向：$A_n \cosh \frac{n\pi y}{a} + B_n \sinh \frac{n\pi y}{a}$ (或者 $C_n e^{\dots} + D_n e^{-\dots}$)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(x,y) = \sum_{n=1}^\infty \left( A_n \cosh \frac{n\pi y}{a} + B_n \sinh \frac{n\pi y}{a} \right) \sin \frac{n\pi x}{a} $$
+&lt;em&gt;(系数 $A_n, B_n$ 由上下两边的非齐次条件定)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="情形-b上下为-0-y0-yb-是齐次"&gt;情形 B：上下为 0 ($y=0, y=b$ 是齐次)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;$Y(y)$ 方向：$\sin \frac{n\pi y}{b}$&lt;/li&gt;
+&lt;li&gt;$X(x)$ 方向：双曲函数&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(x,y) = \sum_{n=1}^\infty \left( A_n \cosh \frac{n\pi x}{b} + B_n \sinh \frac{n\pi x}{b} \right) \sin \frac{n\pi y}{b} $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="情形-c四周都有值-叠加原理"&gt;情形 C：四周都有值 (叠加原理)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;如果矩形四边都不是 0，必须把问题拆成两个子问题（A + B），分别求解后再相加。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第三部分二维拉普拉斯方程极坐标"&gt;第三部分：二维拉普拉斯方程（极坐标）
+&lt;/h3&gt;&lt;p&gt;方程：$\Delta u = 0$
+通用原料：$r^n, r^{-n}, \ln r, \text{const}$ 和 $\sin n\theta, \cos n\theta$。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;分类依据：区域是否包含圆心 ($0$) 和无穷远 ($\infty$)。&lt;/strong&gt;&lt;/p&gt;
+&lt;h4 id="1-圆内问题-r--a"&gt;1. 圆内问题 ($r &amp;lt; a$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; $\ln r$ (在0处无穷), $r^{-n}$ (在0处无穷)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = \frac{A_0}{2} + \sum_{n=1}^\infty r^n (A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;(这是最常用的泊松积分公式的前身)&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-圆外问题-r--a"&gt;2. 圆外问题 ($r &amp;gt; a$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; $r^n$ (在$\infty$处发散), $\ln r$ (通常去除，除非有源)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = \frac{A_0}{2} + \sum_{n=1}^\infty \frac{1}{r^n} (A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="3-圆环问题-a--r--b"&gt;3. 圆环问题 ($a &amp;lt; r &amp;lt; b$)
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;去除项：&lt;/strong&gt; 无。所有项都保留。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;解的形式：&lt;/strong&gt;
+$$ u(r,\theta) = A_0 + B_0 \ln r + \sum_{n=1}^\infty (C_n r^n + D_n r^{-n})(A_n \cos n\theta + B_n \sin n\theta) $$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="终极速查表-cheat-sheet"&gt;终极速查表 (Cheat Sheet)
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;方程与坐标&lt;/th&gt;
+&lt;th style="text-align: left"&gt;关键特征&lt;/th&gt;
+&lt;th style="text-align: left"&gt;解的主要形式 (级数项)&lt;/th&gt;
+&lt;th style="text-align: left"&gt;备注&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;弦振动 (1D)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;波动&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$T(t) \cdot X(x)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$X(x)$ 定基底，&lt;strong&gt;$T(t)$ 是正余弦&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;热传导 (1D)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;扩散&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$T(t) \cdot X(x)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$X(x)$ 定基底，&lt;strong&gt;$T(t)$ 是指数衰减&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (直角)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;稳态&lt;/td&gt;
+&lt;td style="text-align: left"&gt;Trig(齐次向) $\cdot$ Hyperbolic(非齐次向)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;一边 $\sin$，另一边 $\sinh/\cosh$&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (圆内)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;极坐标&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$r^n \cdot (A\cos + B\sin)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;去掉 $r^{-n}$ 和 $\ln r$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;拉普拉斯 (圆外)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;极坐标&lt;/td&gt;
+&lt;td style="text-align: left"&gt;$r^{-n} \cdot (A\cos + B\sin)$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;去掉 $r^n$&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;做题套路总结：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;定方程：&lt;/strong&gt; 决定了时间项 ($T$) 还是双曲项 ($Y$)。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;看边界 (x/齐次方向)：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;$0, 0 \rightarrow \sin$&lt;/li&gt;
+&lt;li&gt;$0&amp;rsquo;, 0&amp;rsquo; \rightarrow \cos$ (注意 $n=0$ 常数项)&lt;/li&gt;
+&lt;li&gt;$0, 0&amp;rsquo; \rightarrow \sin((n+0.5)\dots)$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;看区域 (极坐标)：&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;有圆心 $\rightarrow$ 留 $r^n$&lt;/li&gt;
+&lt;li&gt;有无穷 $\rightarrow$ 留 $r^{-n}$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</description></item></channel></rss>

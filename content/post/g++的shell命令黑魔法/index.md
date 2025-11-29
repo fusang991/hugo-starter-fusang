@@ -11,6 +11,7 @@ draft: false
 categories:
     - c++
 ---
+
 c++的编译过程：预处理，编译，汇编，链接
 
 ## 1. 预处理
@@ -18,7 +19,7 @@ c++的编译过程：预处理，编译，汇编，链接
 
 ### 1.1 头文件引用树 -H
 
-``` shell
+``` 
 g++ -H blog.cpp
 . /usr/include/c++/13/chrono
 .. /usr/include/c++/13/bits/requires_hosted.h

@@ -1,5 +1,5 @@
 ---
-title: "G++的shell命令黑魔法"
+title: "gcc的shell命令黑魔法"
 description: 
 date: 2025-11-29T23:42:26+08:00
 image: 

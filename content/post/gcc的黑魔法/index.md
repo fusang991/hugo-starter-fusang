@@ -19,7 +19,7 @@ auto add_xy(int x, int y) { return x + y; }
 int main() {
   int a, b;
   int c = add(a, b);
-  int d = add(a, b);
+  int d = add_xy(a, b);
 }
 ```
 c++的编译过程：预处理，编译，汇编，链接
@@ -714,8 +714,8 @@ C++ 支持**函数重载**（Overloading，即多个函数可以叫同一个名�
 - 示例：
 ```bash
 g++ -O3 -fopt-info-all simple.cpp                                             (base)
-simple.cpp:7:14: note: Considering inline candidate auto add(int, int)/30.
-simple.cpp:7:14: optimized:  Inlining auto add(int, int)/30 into int main()/32.
+simple.cpp:7:17: note: Considering inline candidate auto add_xy(int, int)/31.
+simple.cpp:7:17: optimized:  Inlining auto add_xy(int, int)/31 into int main()/32.
 simple.cpp:6:14: note: Considering inline candidate auto add(int, int)/30.
 simple.cpp:6:14: optimized:  Inlining auto add(int, int)/30 into int main()/32.
 Unit growth for small function inlining: 7->7 (0%)

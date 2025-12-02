@@ -3,7 +3,7 @@ title: "波动方程的达朗贝尔公式和基尔霍夫公式"
 description: 
 date: 2025-12-02T11:08:41+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: false

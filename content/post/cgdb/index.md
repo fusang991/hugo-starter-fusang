@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - c++
 ---
 `cgdb` 是 GDB 的一个轻量级前端，它在终端中提供了一个分屏界面：上半部分显示代码（类似 Vim），下半部分是 GDB 命令窗口。
 

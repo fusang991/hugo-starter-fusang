@@ -157,3 +157,151 @@ cgdb ./main
 ---
 
 按照这 35 个问题走下来，你看到的将不再是枯燥的代码，而是内存中流动的字节和指针的舞蹈。祝你在 GDB 的世界里探索愉快！
+
+
+好的，这里是针对 C++ STL 常用容器的底层实现、方法应用、性能陷阱和现代 C++ 特性的 100 个深度问题。这些问题旨在考察开发者对 STL 的理解深度，而不仅仅是停留在“会用”的层面。
+
+问题分为以下几个类别：
+1.  **通用概念与容器对比 (1-15)**
+2.  **`std::vector` (16-30)**
+3.  **`std::list` & `std::forward_list` (31-40)**
+4.  **`std::deque` (41-50)**
+5.  **有序关联容器 (`map`, `set`) (51-65)**
+6.  **无序关联容器 (`unordered_map`, `unordered_set`) (66-80)**
+7.  **容器适配器 (`stack`, `queue`, `priority_queue`) (81-85)**
+8.  **高级主题 (迭代器, 内存, 异常, 并发) (86-100)**
+
+---
+
+### 一、通用概念与容器对比 (1-15)
+
+1.  **迭代器失效 (Iterator Invalidation)**：请分别解释在对 `std::vector`, `std::list`, `std::deque`, `std::unordered_map` 进行插入（insert）和删除（erase）操作时，会导致哪些类型的迭代器、指针和引用失效？为什么？
+2.  **性能权衡**：在“随机访问”、“在序列中间插入/删除”和“在序列两端插入/删除”这三个场景下，请详细对比 `vector`, `list`, `deque` 的时间复杂度，并解释其底层数据结构如何导致这些性能差异。
+3.  **缓存友好性 (Cache Friendliness)**：为什么通常说 `std::vector` 是缓存友好的，而 `std::list` 不是？这在实际应用中会带来多大的性能影响？请举例说明。
+4.  **`emplace` vs `insert/push`**：`emplace*`系列方法（如 `emplace_back`, `emplace`）相比于 `insert` 或 `push_back` 的主要优势是什么？请解释其背后的完美转发（Perfect Forwarding）和原地构造（In-place Construction）机制。
+5.  **节点式容器 vs 序列式容器**：从内存分配和布局的角度，比较节点式容器（如 `list`, `map`）和序列式容器（如 `vector`, `deque`）的优缺点。
+6.  **`map::operator[]` vs `map::at`**：`std::map` 的 `operator[]` 和 `at()` 方法有何区别？在什么情况下应该优先使用哪一个？`operator[]` 对 `mapped_type`（值类型）有什么特殊要求？
+7.  **有序 vs 无序**：在选择键值对存储时，你会在什么情况下选择 `std::map` 而不是 `std::unordered_map`？请至少列出三个决定性因素。
+8.  **异常安全保证 (Exception Safety Guarantee)**：STL 容器通常提供哪几种异常安全保证（基本、强、不抛出）？请以 `vector::push_back` 为例，说明当元素类型的拷贝/移动构造函数抛出异常时，容器会处于什么状态？
+9.  **存储指针 vs 存储对象**：在容器中直接存储对象（`vector<MyObject>`）与存储对象的智能指针（`vector<unique_ptr<MyObject>>`）各有什么优缺点和适用场景？
+10. **`size()` vs `capacity()` vs `max_size()`**：解释 `vector`（或其他适用容器）中这三个函数的含义和区别。
+11. **清除容器**：`clear()` 方法和 `c = {}`（例如 `v = {}`）在清空一个容器时，行为上有什么潜在的差异？（提示：考虑内存）
+12. **`shrink_to_fit()`**：`shrink_to_fit()` 的作用是什么？为什么标准规定它是一个“非绑定请求”（non-binding request）？
+13. **多重容器 (Multi-containers)**：`std::multimap` 和 `std::multiset` 解决了什么问题？它们的底层实现与对应的 `map` 和 `set` 有何不同？
+14. **C++17 的异构查找 (Heterogeneous Lookup)**：C++17 中，如何实现在 `std::map<std::string, T>` 中使用 `std::string_view` 进行查找而无需构造 `std::string`？这需要用到什么特性？
+15. **选择合适的容器**：设计一个日志系统，需要频繁在尾部追加日志条目，偶尔需要按时间戳范围查找日志。你会选择哪个或哪些 STL 容器组合来实现？并说明原因。
+
+---
+
+### 二、`std::vector` (16-30)
+
+16. **动态增长策略**：`std::vector` 的容量在空间不足时是如何增长的？为什么通常采用“倍增”（或 1.5 倍）策略，而不是线性增加（如每次增加 10个元素）？
+17. **`reserve()` 的重要性**：在什么场景下，预先调用 `reserve()` 会极大地提升性能？它如何避免不必要的性能开销？
+18. **`vector<bool>` 特化**：`std::vector<bool>` 是一个“假的”容器吗？请解释它的特殊底层实现（位集），以及这种实现带来的优点和哪些违反常规容器语义的“坑”？
+19. **移动语义与 `vector`**：C++11 的移动语义（Move Semantics）如何优化 `std::vector` 的重分配（reallocation）过程？特别是当元素类型是 `std::string` 或 `std::unique_ptr` 时。
+20. **`erase-remove` 惯用法**：请解释并实现 C++ 中的 "erase-remove idiom"。为什么直接循环调用 `erase` 来删除多个元素效率低下？
+21. **指针失效的细节**：当 `vector` 发生重分配时，为什么指向其元素的“所有”指针、引用和迭代器都会失效？
+22. **`data()` 方法**：`v.data()` 返回的指针有什么用？它与 `&v[0]` 有什么异同？在 C++11 之前和之后有什么变化？
+23. **`emplace_back` 的异常安全**：如果 `emplace_back` 的参数构造函数抛出异常，`vector` 的状态会怎样？它是否满足强异常安全保证？
+24. **`vector` 插入操作的复杂度**：为什么在 `vector` 的末尾插入是“摊还 O(1)”，而在开头或中间插入是 O(N)？请解释“摊还”的含义。
+25. **非 `noexcept` 的移动构造函数**：如果一个类型的移动构造函数没有被标记为 `noexcept`，`vector` 在扩容时会如何处理？这会带来什么性能影响？
+
+---
+
+### 三、`std::list` & `std::forward_list` (31-40)
+
+31. **`list::size()` 的历史**：为什么在 C++11 之前，一些标准库实现的 `list::size()` 的时间复杂度是 O(N)？这与 `splice` 方法有什么关系？
+32. **`splice` 的威力**：`list::splice()` 操作为什么效率极高（O(1)）？请描述它的作用和底层实现原理。
+33. **`list` vs. `forward_list`**：`std::forward_list` 相比 `std::list` 有哪些优势和劣势？为什么它的 API 设计中充满了 `*_after` 形式的方法？
+34. **自我排序**：为什么 `std::list` 和 `std::forward_list` 拥有自己的 `sort()` 成员函数，而 `vector` 和 `deque` 却使用全局的 `std::sort()`？（提示：迭代器类别）
+35. **内存开销**：详细分析 `std::list<T>` 相对于 `std::vector<T>` 的内存开销。除了数据 `T` 本身，每个元素还需额外存储什么？
+36. **迭代器稳定性**：为什么说 `std::list` 提供了最强的迭代器稳定性？除了被删除的那个元素，任何插入或删除操作都不会使指向其他元素的迭代器失效。
+37. **`list` 的适用场景**：在现代 C++ 编程中，考虑到缓存性能的影响，`std::list` 的实际适用场景还有哪些？
+38. **合并两个有序 `list`**：如何高效地（优于 O(N log N)）合并两个已排序的 `std::list`？
+39. **`forward_list` 的 `before_begin`**：`forward_list` 的 `before_begin()` 迭代器有什么特殊用途？为什么需要它？
+40. **实现 `list::reverse`**：如果不使用 `list::reverse()` 成员函数，请描述如何原地反转一个 `std::list`，并分析其复杂度。
+
+---
+
+### 四、`std::deque` (41-50)
+
+41. **`deque` 的底层结构**：请详细描述 `std::deque` 的典型底层数据结构（“分块数组”或“中控数组”）。
+42. **`deque` 的迭代器**：`std::deque` 的迭代器是如何实现的？为什么它能表现得像一个随机访问迭代器，但其内部结构却比 `vector` 的指针复杂得多？
+43. **性能特点**：`deque` 如何做到在两端进行摊还 O(1) 的插入和删除？它的随机访问为什么比 `vector` 慢？
+44. **迭代器失效的复杂性**：`deque` 的插入/删除操作导致的迭代器失效规则比 `vector` 更复杂。请具体说明在 `deque` 中间插入/删除元素时，哪些迭代器、指针和引用会失效，哪些不会。
+45. **内存布局**：`deque` 的元素在内存中是连续的吗？这对其性能有什么影响？
+46. **`deque` vs. `vector`**：如果一个场景需要频繁在容器头部插入元素，`deque` 是唯一的选择吗？和 `vector` 相比，除了头部插入，它还有什么优势？（例如，不会发生一次性的大规模内存复制）
+47. **`deque` 的收缩**：`deque` 是否支持 `shrink_to_fit()`？其效果与 `vector` 有何不同？
+48. **作为底层容器**：为什么 `std::stack` 和 `std::queue` 默认使用 `std::deque` 作为其底层容器，而不是 `std::vector` 或 `std::list`？
+49. **指针与引用**：在 `deque` 的两端进行插入操作后，指向未受影响元素的指针和引用是否保持有效？为什么？
+50. **小对象存储**：对于存储大量小对象，`deque` 的分块结构相比 `vector` 的连续内存，在内存管理上可能有什么优势？
+
+---
+
+### 五、有序关联容器 (`map`, `set`) (51-65)
+
+51. **底层实现**：`std::map` 和 `std::set` 通常基于哪种自平衡二叉搜索树？为什么选择它而不是 AVL 树？
+52. **Key 的要求**：作为 `std::map` 或 `std::set` 的键（Key），类型必须满足什么要求？（提示：`Compare` 函数对象）
+53. **`lower_bound` vs `upper_bound`**：请解释 `map::lower_bound` 和 `map::upper_bound` 的作用和区别。如何利用它们高效地对 `map` 进行范围查询？
+54. **迭代顺序**：遍历一个 `std::map` 或 `std::set` 时，元素的顺序是如何保证的？
+55. **插入操作的返回值**：`map::insert` 的返回值是什么类型？它包含了哪些信息？如何利用这些信息判断插入是否成功以及获取指向元素的迭代器？
+56. **`emplace` 与提示 (hint)**：`emplace_hint(iterator, args...)` 中的 `hint` 参数有什么作用？在什么情况下它能将插入操作的复杂度从 O(log N) 优化到摊还 O(1)？
+57. **自定义比较函数**：当使用自定义对象作为 `map` 的 key 时，如何提供自定义的比较逻辑？如果比较逻辑不满足“严格弱序”（Strict Weak Ordering），会导致什么问题？
+58. **C++17 节点操作 (`extract`, `merge`)**：C++17 引入的 `extract` 和 `merge` 方法解决了什么痛点？请举例说明如何用它们在不重新分配内存的情况下修改一个 `map` 中元素的 key。
+59. **`count()` 的效率**：对于 `std::map`，`count(key)` 的效率如何？它和 `find(key) != end()` 相比，哪个更适合用来检查 key 是否存在？`multimap` 呢？
+60. **迭代器与指针稳定性**：`map`/`set` 的插入和删除操作是否会使指向其他元素的迭代器、指针或引用失效？为什么？
+61. **`map` 中的 `const` Key**：为什么从 `std::map<K, V>::iterator` 中解引用得到的是 `std::pair<const K, V>`？Key 部分为什么是 `const` 的？
+62. **透明比较器 (`std::less<>`)**：在 C++14 中，如何使用 `std::less<>` (或`std::greater<>` 等) 作为模板参数，以实现异构查找？
+63. **`equal_range`**：`map::equal_range` 的作用是什么？它在处理 `multimap` 时特别有用，为什么？
+64. **内存开销**：分析 `std::map<K, V>` 的单节点内存开销，除了 `K` 和 `V`，还包含哪些额外信息？
+65. **查找复杂度的本质**：为什么说 `map` 的查找是 O(log N)？这个 N 指的是什么？
+
+---
+
+### 六、无序关联容器 (`unordered_map`, `unordered_set`) (66-80)
+
+66. **底层实现**：`std::unordered_map` 通常的底层实现是什么？请描述哈希表、桶（bucket）和链表（或开放地址法）在其中的作用。
+67. **哈希与相等**：要将自定义类型作为 `unordered_map` 的 key，需要为其提供哪两个函数？它们之间必须满足什么关系？（即，如果 `a == b`，则 `hash(a)` 必须等于 `hash(b)`）
+68. **哈希冲突 (Collision)**：什么是哈希冲突？`unordered_map` 是如何解决冲突的？冲突对性能有什么影响？
+69. **加载因子 (Load Factor)**：什么是加载因子？它如何影响 `unordered_map` 的性能？`max_load_factor` 函数的作用是什么？
+70. **重哈希 (Rehashing)**：什么情况下会触发 `unordered_map` 的重哈希？重哈希是一个昂贵的操作吗？它对迭代器有什么影响？
+71. **`reserve` 的作用**：`unordered_map::reserve(n)` 和 `vector::reserve(n)` 有何不同？它预留的是元素空间还是桶空间？
+72. **最坏情况复杂度**：`unordered_map` 的平均查找复杂度是 O(1)，但最坏情况是 O(N)。请描述一个能导致最坏情况发生的场景。
+73. **桶接口 (Bucket Interface)**：`bucket_count()`, `bucket_size(n)`, `bucket(key)` 这些桶接口函数有什么用？它们可以用来诊断哈希函数的质量吗？
+74. **性能陷阱**：使用默认的 `std::hash<std::string>` 时，如果输入的字符串有很多共同的前缀，可能会导致什么性能问题？如何解决？
+75. **指针稳定性**：在不发生重哈希的情况下，`unordered_map` 的插入操作是否会使指向已有元素的指针或引用失效？删除操作呢？
+76. **`unordered_map` vs. `std::map`**：在性能敏感的应用中，即使不需要有序性，`std::map` 有时也可能比 `unordered_map` 更快。请解释可能的原因（例如，哈希计算开销、缓存行伪共享等）。
+77. **不可哈希的 Key**：为什么像 `std::vector` 或 `std::pair` 这样的类型默认不能作为 `unordered_map` 的 key？如何让它们可以被用作 key？
+78. **C++20 `contains`**：C++20 为关联容器增加了 `contains` 方法。相比 `find(key) != end()` 或 `count(key)`，它有什么优势？
+79. **哈希函数的种子**：一些哈希函数实现是带“种子”的，这有什么安全上的好处？（提示：哈希洪水攻击，Hash DoS）
+80. **开放地址法 vs. 链地址法**：大多数标准库实现 `unordered_map` 使用链地址法。如果使用开放地址法实现，会有哪些不同的性能特性和优缺点？
+
+---
+
+### 七、容器适配器 (`stack`, `queue`, `priority_queue`) (81-85)
+
+81. **适配器模式**：为什么 `stack`, `queue`, `priority_queue` 被称为“容器适配器”？它们体现了设计模式中的哪个原则？
+82. **底层容器选择**：`std::priority_queue` 默认使用 `std::vector`，而 `std::stack` 和 `std::queue` 默认使用 `std::deque`。请解释这些默认选择的合理性。
+83. **`priority_queue` 实现**：`std::priority_queue` 的底层是如何实现优先级的？（提示：堆 Heap）。插入（`push`）和弹出（`pop`）操作的时间复杂度是多少？
+84. **自定义 `priority_queue`**：如何创建一个最小堆（min-heap）而不是默认的最大堆（max-heap）？如何为自定义类型提供优先级比较逻辑？
+85. **接口限制**：为什么容器适配器不允许遍历其内部元素（即没有提供迭代器）？这种接口设计背后的意图是什么？
+
+---
+
+### 八、高级主题 (迭代器, 内存, 异常, 并发) (86-100)
+
+86. **迭代器类别 (Iterator Categories)**：解释 C++ 的五种迭代器类别（Input, Output, Forward, Bidirectional, Random Access）及其能力。请为每个类别至少举一个 STL 容器的例子。
+87. **自定义分配器 (Allocator)**：`std::allocator` 是什么？在什么情况下你需要编写并使用一个自定义的分配器？（例如，内存池、对齐内存）
+88. **STL 与线程安全**：STL 容器是线程安全的吗？请详细解释标准对 STL 容器线程安全性的保证（“读-读”安全，“读-写/写-写”不安全）。
+89. **并发访问的风险**：同时在不同线程中对同一个 `std::vector` 进行 `push_back` 会导致什么问题？仅仅加锁 `push_back` 调用本身足够吗？
+90. **节点句柄 (Node Handles)**：再谈 C++17 的 `node_type`，它如何实现容器间（例如 `map` 到 `map`，甚至 `map` 到 `set`）高效、无异常抛出的元素转移？
+91. **不完整类型 (Incomplete Types)**：是否可以在容器中存储不完整类型，例如在类定义中 `class A { std::vector<A> children; };`？为什么可以/不可以？`std::vector<std::unique_ptr<A>>` 呢？
+92. **`std::array`**：`std::array` 和 C 风格数组、`std::vector` 相比，各有什么优缺点？为什么说它是“零开销抽象”？
+93. **`std::span` (C++20)**：`std::span` 是一个容器吗？它如何与 `std::vector`, `std::array` 等容器交互，解决了什么问题？
+94. **强异常安全保证的代价**：为了在 `vector::push_back` 中提供强异常安全保证，当元素的移动构造函数不是 `noexcept` 时，实现必须回退到拷贝。请解释这背后的逻辑。
+95. **短字符串优化 (SSO)**：虽然不是容器，但 `std::string` 的短字符串优化（SSO）与 `vector` 的动态内存管理形成了鲜明对比。请解释 SSO 的原理，并讨论如果 `vector` 也尝试实现类似的优化（“短向量优化”）会面临什么挑战。
+96. **`allocator_traits`**：`std::allocator_traits` 是做什么用的？为什么我们应该通过它而不是直接调用分配器的方法？
+97. **过对齐数据 (Over-aligned Data)**：如何在一个 `std::vector` 中存储需要特定内存对齐（如 16-byte 或 32-byte 对齐）的数据？
+98. **移动专用类型**：对于像 `std::unique_ptr` 这样的移动专用（move-only）类型，它们在各种 STL 容器中的使用（插入、删除、排序）是如何工作的？有什么限制？
+99. **`contiguous_iterator` (C++20)**：C++20 引入了 `contiguous_iterator` 概念。哪些容器的迭代器满足这个概念？这个概念有什么实际用途？
+100. **未来展望**：你认为 C++ 标准库的容器在未来可能会有哪些新的发展或改进？（例如，并发容器、更灵活的内存管理、平面容器 `flat_map` 等）

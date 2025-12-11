@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>模电 on fusang blog</title><link>https://demo.stack.jimmycai.com/categories/%E6%A8%A1%E7%94%B5/</link><description>Recent content in 模电 on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 30 Nov 2025 20:08:53 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/categories/%E6%A8%A1%E7%94%B5/index.xml" rel="self" type="application/rss+xml"/><item><title>模电问题记录</title><link>https://demo.stack.jimmycai.com/post/%E6%A8%A1%E7%94%B5%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</link><pubDate>Sun, 30 Nov 2025 20:08:53 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/%E6%A8%A1%E7%94%B5%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95/</guid><description>&lt;h2 id="失真的类型有哪些能否举一些常见电路中可能产生的失真的例子"&gt;失真的类型有哪些？能否举一些常见电路中可能产生的失真的例子
+&lt;/h2&gt;&lt;h2 id="复合管的等效"&gt;复合管的等效
+&lt;/h2&gt;&lt;h2 id="如何拆开bjt的黑盒子去分析输入和输出电阻"&gt;如何拆开bjt的黑盒子去分析输入和输出电阻
+&lt;/h2&gt;&lt;p&gt;要打破“黑盒子”，你需要掌握一把“万能钥匙”：&lt;strong&gt;电阻反射规则（Impedance Reflection Rule）&lt;/strong&gt;。&lt;/p&gt;
+&lt;h3 id="第一步打开黑盒子建立心理模型"&gt;第一步：打开黑盒子（建立心理模型）
+&lt;/h3&gt;&lt;p&gt;在交流小信号分析中，把 BJT 想象成内部只有两个东西：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;基极-发射极之间（B-E）&lt;/strong&gt;：夹着一个小电阻，叫 &lt;strong&gt;$r_{be}$&lt;/strong&gt;（或者 $r_\pi$）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;电流关系&lt;/strong&gt;：流过发射极的电流 $i_e$ 是流过基极电流 $i_b$ 的 &lt;strong&gt;$1+\beta$ 倍&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;strong&gt;关键点来了：&lt;/strong&gt;
+电流在 B 极很小，在 E 极很大。这意味着：&lt;strong&gt;电阻在不同引脚“看”过去，阻值是不一样的。&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="第二步核心心法电阻反射规则"&gt;第二步：核心心法——“电阻反射规则”
+&lt;/h3&gt;&lt;p&gt;这是分析输入输出电阻的终极捷径，请务必记住：&lt;/p&gt;
+&lt;h4 id="1-从基极看发射极往里看变大"&gt;1. 从基极看发射极（往里看，变大）
+&lt;/h4&gt;&lt;p&gt;当你站在基极（Base）往发射极（Emitter）看时，你看到的任何接在发射极上的电阻，都会被&lt;strong&gt;放大&lt;/strong&gt; $1+\beta$ 倍。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;直觉解释&lt;/strong&gt;：因为发射极电流很大，基极只需要很小的电流就能控制它。对于基极来说，这感觉像是推一个很重的电阻，所以电阻看起来变大了。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式&lt;/strong&gt;：
+$$R_{in(\text{从基极看})} = r_{be} + (1+\beta) \times R_{E(\text{发射极总电阻})}$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="2-从发射极看基极往回看变小"&gt;2. 从发射极看基极（往回看，变小）
+&lt;/h4&gt;&lt;p&gt;当你站在发射极（Emitter）往基极（Base）看时，你看到的任何接在基极上的电阻，都会被&lt;strong&gt;缩小&lt;/strong&gt; $1+\beta$ 倍。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;直觉解释&lt;/strong&gt;：因为发射极电流很大，它觉得基极那边的电阻简直微不足道。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;公式&lt;/strong&gt;：
+$$R_{out(\text{从发射极看})} = \frac{R_{B(\text{基极外部电阻})} + r_{be}}{1+\beta}$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="第三步标准化分析流程"&gt;第三步：标准化分析流程
+&lt;/h3&gt;&lt;p&gt;现在我们用这个规则来分析你的输入电阻和输出电阻。&lt;/p&gt;
+&lt;h4 id="1-输入电阻-r_i-分析法"&gt;1. 输入电阻 ($R_i$) 分析法
+&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;目标&lt;/strong&gt;：从信号输入端看进去的总电阻。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Step 1：画交流通路&lt;/strong&gt;。电容短路，直流电源接地。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Step 2：找基极偏置电阻&lt;/strong&gt;。通常有 $R_{b1}, R_{b2}$ 等，它们通常是并联在输入端的，先放在一边记着。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Step 3：看晶体管内部（应用反射规则）&lt;/strong&gt;。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;情况 A（发射极直接接地）&lt;/strong&gt;：最简单。晶体管输入电阻就是 &lt;strong&gt;$r_{be}$&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;情况 B（发射极接有电阻 $R_e$）&lt;/strong&gt;：应用反射规则。晶体管输入电阻是 &lt;strong&gt;$r_{be} + (1+\beta)R_e$&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Step 4：并联&lt;/strong&gt;。
+$$R_i = (\text{偏置电阻}) // (\text{晶体管输入电阻})$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;回到刚才那道题（共射放大，Re被电容旁路）：&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;发射极交流接地（情况 A）。&lt;/li&gt;
+&lt;li&gt;晶体管输入电阻 = $r_{be}$。&lt;/li&gt;
+&lt;li&gt;总输入电阻 $R_i = R_{b1} // R_{b2} // r_{be}$。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h4 id="2-输出电阻-r_o-分析法"&gt;2. 输出电阻 ($R_o$) 分析法
+&lt;/h4&gt;&lt;p&gt;&lt;strong&gt;目标&lt;/strong&gt;：从输出端看进去，把负载 $R_L$ 拔掉后的等效电阻。
+&lt;strong&gt;核心操作&lt;/strong&gt;：&lt;strong&gt;令输入信号源 $v_s = 0$（短路）&lt;/strong&gt;，然后往里看。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;情况 A：从集电极（Collector）输出（如共射电路）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当我们把输入信号短路（$v_s=0$），意味着基极没有交流电流 ($i_b=0$)。&lt;/li&gt;
+&lt;li&gt;既然 $i_b=0$，那么受控电流源 $\beta i_b$ 也就等于 0（相当于开路/断路）。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：你看进去，只能看到一个孤独的集电极电阻 &lt;strong&gt;$R_c$&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;情况 B：从发射极（Emitter）输出（如射极跟随器）&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;这通常是最难的，但用&lt;strong&gt;反射规则&lt;/strong&gt;秒杀。&lt;/li&gt;
+&lt;li&gt;你站在发射极往里看，看到了什么？看到了内部的 $r_{be}$ 和外部基极的电阻 $R_s$（信号源内阻）或偏置电阻。&lt;/li&gt;
+&lt;li&gt;记得规则：从 E 看 B，电阻要除以 $(1+\beta)$。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;结论&lt;/strong&gt;：
+$$R_o = R_e // \left[ \frac{r_{be} + (R_{\text{基极外部电阻}})}{1+\beta} \right]$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="总结一张表不再黑盒"&gt;总结一张表（不再黑盒）
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;观察位置&lt;/th&gt;
+&lt;th style="text-align: left"&gt;看到什么&lt;/th&gt;
+&lt;th style="text-align: left"&gt;规则（口诀）&lt;/th&gt;
+&lt;th style="text-align: left"&gt;应用场景&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;从基极看 (B)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;看到 $r_{be}$ 串联着 $R_E$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;$R_E$ 变大&lt;/strong&gt; $(1+\beta)$ 倍&lt;/td&gt;
+&lt;td style="text-align: left"&gt;算输入电阻 (共射/共集)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;从集电极看 (C)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;看到电流源 (开路) 和 $R_C$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;只剩 $R_C$&lt;/strong&gt; (因为 $i_b=0$)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;算输出电阻 (共射)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;从发射极看 (E)&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;看到 $r_{be}$ 串联着 $R_B$&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;$R_B$ 变小&lt;/strong&gt; $(1+\beta)$ 倍&lt;/td&gt;
+&lt;td style="text-align: left"&gt;算输出电阻 (共集/射极跟随器)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3 id="试着分析刚才的题目"&gt;试着分析刚才的题目：
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;输入电阻&lt;/strong&gt;：因为 $R_e$ 被电容短路了，所以从基极看进去，只能看到 $r_{be}$。再加上外部的分压电阻，就是 $R_{b1} // R_{b2} // r_{be}$。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;输出电阻&lt;/strong&gt;：从集电极看进去，输入信号置零，$i_b=0$，电流源断开，只能看到 &lt;strong&gt;$R_c$&lt;/strong&gt;（3kΩ）。&lt;/li&gt;
+&lt;/ul&gt;</description></item></channel></rss>

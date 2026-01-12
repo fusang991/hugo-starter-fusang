@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - cs106B
+    - c++
 --- 
 ```cpp
 #include <chrono>

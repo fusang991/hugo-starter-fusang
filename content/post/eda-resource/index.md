@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
+categories:
+    - resource
 ---
 下面是我筛过的 **EDA 学习教材 / notes / slides（都带网址）**，尽量选“短、讲得透、能直接看”的。
 

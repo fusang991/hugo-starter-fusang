@@ -8,8 +8,8 @@ license:
 hidden: false
 comments: true
 draft: false
-categories: 
-    - linuxC
+categories:
+    - c++
 ---
 
 ## q1:利用结构体实现分数的抽象

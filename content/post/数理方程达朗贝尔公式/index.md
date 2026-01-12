@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 数理方程
+    - other
 ---
 
 这是一份关于数理方程课程中**一维波动方程（弦振动方程）**的**行波法**与**达朗贝尔公式**的复习总结。

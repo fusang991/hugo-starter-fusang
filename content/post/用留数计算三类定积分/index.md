@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 复变函数
+    - other
 ---
 
 这张PPT展示了留数定理在计算实积分时的三种最经典应用场景。这三类积分在复变函数考试中是必考内容。

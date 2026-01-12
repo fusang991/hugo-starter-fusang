@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 数理方程
+    - other
 ---
 这是一份非常系统的总结需求。掌握这四种情况，基本上就覆盖了本科数理方程考试中**分离变量法** 90% 的考点。
 

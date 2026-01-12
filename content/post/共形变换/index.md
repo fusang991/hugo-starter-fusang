@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 复变函数
+    - other
 ---
 
 

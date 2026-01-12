@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 ---
 
 这是用iflow的glm模型生成的数据作图模板

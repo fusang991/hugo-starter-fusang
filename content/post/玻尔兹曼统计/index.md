@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 ---
 好的，我们按照这个思路重新整理一份更聚焦于公式和具体计算结论的版本。
 

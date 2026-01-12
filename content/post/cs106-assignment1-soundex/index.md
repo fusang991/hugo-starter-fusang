@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - c++
 ---
 
 ## 代码

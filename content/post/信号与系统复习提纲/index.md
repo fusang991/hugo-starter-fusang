@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 ---
 
 ### 第一阶段：扫除盲区（优先攻克 Ch6 & Ch7）

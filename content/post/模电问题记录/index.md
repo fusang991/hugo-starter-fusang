@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 模电
+    - other
 ---
 
 ## 失真的类型有哪些？能否举一些常见电路中可能产生的失真的例子

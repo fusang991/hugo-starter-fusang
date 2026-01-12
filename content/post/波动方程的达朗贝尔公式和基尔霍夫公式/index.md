@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 数理方程
+    - other
 ---
 好的！以下是**行波法、达朗贝尔公式、基尔霍夫公式**的重新总结，其中**基尔霍夫公式采用单位球面上的积分形式**（这是理论分析和推导中更标准、更清晰的写法）。
 

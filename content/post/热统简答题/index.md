@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 ---
 好的，完全理解。根据您的反馈，我对“高级”或者“过于专门”的问题进行了替换，确保所有问题都更加聚焦于热力学与统计物理的核心基本概念。
 

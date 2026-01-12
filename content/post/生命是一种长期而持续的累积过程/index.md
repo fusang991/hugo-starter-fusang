@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - resource
 ---
 
 摘自[网上](https://gupa.gzhu.edu.cn/info/1081/5080.htm)

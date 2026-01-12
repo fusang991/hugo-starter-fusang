@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - python
+    - other
 tags:
     - python
     - ai-creation

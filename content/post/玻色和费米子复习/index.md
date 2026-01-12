@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 ---
 
 好的，我们来构建一份以公式为骨架，辅以物理图像和推导思路的量子统计核心笔记。这份材料将聚焦于玻色子、光子和费米子这三大家族。

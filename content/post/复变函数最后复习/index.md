@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - 复变函数
+    - other
 ---
 
 收到。这不仅是一次简单的整合，更是一次根据你最新的**复习侧重点（20分共形映射+基础概念挖根）**进行的**战略升级**。

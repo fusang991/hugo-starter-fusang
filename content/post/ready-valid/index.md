@@ -9,7 +9,7 @@ hidden: false
 comments: true
 draft: false
 categories:
-    - zynq
+    - other
 tags:
     - digital
     - zynq

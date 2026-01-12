@@ -9,7 +9,7 @@ hidden: false
 comments: false
 draft: false
 categories:
-    - verilog
+    - other
 tags:
     - wip
     - verilog

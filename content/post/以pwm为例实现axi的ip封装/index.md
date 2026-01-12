@@ -8,12 +8,12 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - other
 tags:
   - ai-creation
   - zynq
   - axi
-categories:
-  - zynq
 ---
 太棒了！让我们从绝对的第一性原理出发，彻底搞懂AXI，然后一步步将它与你的PWM设计融合，完成一次工业级的IP封装。
 

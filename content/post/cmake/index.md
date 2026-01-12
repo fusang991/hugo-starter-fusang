@@ -8,6 +8,8 @@ license:
 hidden: false
 comments: false
 draft: false
+categories:
+    - c++
 ---
 这是一份为你定制的 **CMake 极简实战指南**。
 

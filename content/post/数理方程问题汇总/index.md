@@ -3,7 +3,7 @@ title: "数理方程问题汇总"
 description: 
 date: 2026-01-13T22:41:52+08:00
 image: 
-math: 
+math: true
 license: 
 hidden: false
 comments: true

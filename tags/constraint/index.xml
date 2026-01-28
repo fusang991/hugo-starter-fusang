@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Constraint on fusang blog</title><link>https://demo.stack.jimmycai.com/tags/constraint/</link><description>Recent content in Constraint on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 24 Oct 2025 20:19:58 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/tags/constraint/index.xml" rel="self" type="application/rss+xml"/><item><title>Vivado Constraint(created by gemini)</title><link>https://demo.stack.jimmycai.com/post/vivado-constraint/</link><pubDate>Fri, 24 Oct 2025 20:19:58 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/vivado-constraint/</guid><description>&lt;p&gt;Vivado 中的约束（Constraints）主要通过 &lt;strong&gt;Xilinx Design Constraints (XDC)&lt;/strong&gt; 文件来定义，其语法基于 &lt;strong&gt;Tcl（Tool Command Language）&lt;/strong&gt;，并扩展了用于时序、管脚分配、物理约束等的专用命令。以下是 Vivado 约束的基本语法和常用命令分类：&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="1-管脚分配pin-assignment"&gt;1. &lt;strong&gt;管脚分配（Pin Assignment）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;指定顶层模块端口对应的 FPGA 引脚：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; PACKAGE_PIN &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;pin_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;port_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; IOSTANDARD LVCMOS33 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;port_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;示例：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; PACKAGE_PIN D18 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; IOSTANDARD LVCMOS33 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="2-时钟约束clock-constraints"&gt;2. &lt;strong&gt;时钟约束（Clock Constraints）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;定义主时钟、生成时钟或虚拟时钟。&lt;/p&gt;
+&lt;h4 id="主时钟primary-clock"&gt;主时钟（Primary Clock）：
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create_clock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;name &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;clk_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;period &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;period_ns&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;port_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;示例（100 MHz 时钟）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create_clock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;name sys_clk &lt;span class="o"&gt;-&lt;/span&gt;period &lt;span class="mf"&gt;10.000&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="生成时钟generated-clock"&gt;生成时钟（Generated Clock）：
+&lt;/h4&gt;&lt;p&gt;用于 PLL/MMCM 输出或分频/倍频时钟：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create_generated_clock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;name &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;gen_clk_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;source &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;source_pin&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;divide_by &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;N&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;output_pin&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;示例（2 分频）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create_generated_clock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;name clk_div2 &lt;span class="o"&gt;-&lt;/span&gt;source &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;divide_by &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; clk_div2_reg&lt;span class="o"&gt;/&lt;/span&gt;Q&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="3-输入输出延迟约束io-delay"&gt;3. &lt;strong&gt;输入/输出延迟约束（I/O Delay）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;用于指定外部器件与 FPGA 之间的时序关系。&lt;/p&gt;
+&lt;h4 id="输入延迟"&gt;输入延迟：
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_input_delay&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;clock &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;clk_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;delay_ns&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;input_port&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="输出延迟"&gt;输出延迟：
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_output_delay&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;clock &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;clk_name&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;delay_ns&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;output_port&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;示例：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_input_delay&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;clock sys_clk &lt;span class="mf"&gt;2.0&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; data_in&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_output_delay&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;clock sys_clk &lt;span class="mf"&gt;1.5&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; data_out&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="4-时序例外timing-exceptions"&gt;4. &lt;strong&gt;时序例外（Timing Exceptions）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;用于覆盖默认时序分析，如多周期路径、伪路径等。&lt;/p&gt;
+&lt;h4 id="伪路径false-path"&gt;伪路径（False Path）：
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_false_path&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;from &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;start_point&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;to &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_pins&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;end_point&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;或针对端口：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_false_path&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;from &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; async_in&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h4 id="多周期路径multicycle-path"&gt;多周期路径（Multicycle Path）：
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_multicycle_path&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;num_cycles&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;setup &lt;span class="o"&gt;-&lt;/span&gt;from &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_clocks&lt;/span&gt; clk1&lt;span class="k"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;to &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_clocks&lt;/span&gt; clk2&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_multicycle_path&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt;num_cycles&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;hold &lt;span class="o"&gt;-&lt;/span&gt;from &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_clocks&lt;/span&gt; clk1&lt;span class="k"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;to &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_clocks&lt;/span&gt; clk2&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="5-物理约束physical-constraints"&gt;5. &lt;strong&gt;物理约束（Physical Constraints）&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;如区域约束（Pblock）、布局锁定等（较少在 XDC 中直接写，但支持）：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; LOC SLICE_X10Y20 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_cells&lt;/span&gt; my_reg&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="注意事项"&gt;注意事项：
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;顺序敏感&lt;/strong&gt;：XDC 文件按顺序执行，后面的约束可能覆盖前面的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;对象获取&lt;/strong&gt;：常用 &lt;code&gt;[get_ports ...]&lt;/code&gt;、&lt;code&gt;[get_pins ...]&lt;/code&gt;、&lt;code&gt;[get_cells ...]&lt;/code&gt;、&lt;code&gt;[get_clocks ...]&lt;/code&gt; 来定位设计对象。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;单位&lt;/strong&gt;：时间单位默认为纳秒（ns），可省略。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;注释&lt;/strong&gt;：使用 &lt;code&gt;#&lt;/code&gt; 开头。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="示例完整-xdc-片段"&gt;示例完整 XDC 片段：
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-tcl" data-lang="tcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Clock
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;create_clock&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;name clk &lt;span class="o"&gt;-&lt;/span&gt;period &lt;span class="mf"&gt;10.000&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Pin assignment
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; PACKAGE_PIN E3 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; IOSTANDARD LVCMOS33 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; clk&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; PACKAGE_PIN D9 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; reset_n&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_property&lt;/span&gt; IOSTANDARD LVCMOS33 &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; reset_n&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# Input delay
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_input_delay&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;clock clk &lt;span class="mf"&gt;2.0&lt;/span&gt; &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; data_in&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c"&gt;# False path for async reset
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;set_false_path&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;from &lt;span class="k"&gt;[&lt;/span&gt;&lt;span class="nv"&gt;get_ports&lt;/span&gt; reset_n&lt;span class="k"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;p&gt;如果你正在编写状态机并关注复位信号（如 &lt;code&gt;rst&lt;/code&gt;），通常建议：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若为同步复位，无需特殊约束；&lt;/li&gt;
+&lt;li&gt;若为异步复位，需用 &lt;code&gt;set_false_path&lt;/code&gt; 或 &lt;code&gt;set_input_delay&lt;/code&gt; 明确其时序不参与分析，或使用 &lt;code&gt;create_clock&lt;/code&gt; + &lt;code&gt;set_false_path&lt;/code&gt; 组合处理。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要更具体的约束示例（比如针对你的状态机复位）可以告诉我。&lt;/p&gt;</description></item></channel></rss>

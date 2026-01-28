@@ -1,0 +1,198 @@
+<!doctype html><html lang=en-us dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="好的，完全没问题！我们彻底回归本源，从“第一性原理”出发来理解 Makefile，然后再将这些原理应用到你提供的那个优雅的 Vitis Makefile 上。\n第一部分：Makefile 的第一性原理 想象一下，你不是在写代码，而是在厨房里烤蛋糕。\n目标 (Target)：你最终想要的东西，比如一个“巧克力蛋糕”。 依赖 (Prerequisites)：为了做出蛋糕，你先需要准备好的东西，比如“面粉”、“鸡蛋”、“巧克力酱”。 指令 (Command)：你具体要执行的动作，比如“把面粉和鸡蛋混合”、“加入巧克力酱并搅拌”、“放入烤箱烤30分钟”。 Makefile 的核心思想就是描述这种关系：\n要想得到【目标】，必须先确保【依赖】都已就绪，然后执行【指令】。\nmake 这个工具最聪明的地方在于，它会检查文件的时间戳。如果“巧克力蛋糕”比“巧克力酱”更新，说明你已经用最新的酱做过蛋糕了，make 就什么也不做，以节省时间。但如果你刚买了一瓶新的“巧克力酱”（文件时间戳更新了），make 就知道必须重新烤一个蛋糕。\n1. 基本语法：规则 (Rule) Makefile 的所有内容都由一条条的“规则”构成。\n1 2 3 4 目标: 依赖1 依赖2 ... <Tab>指令1 <Tab>指令2 ... 目标 (target): 通常是一个文件名，是你希望生成的文件。 :: 分隔符。 依赖 (prerequisites): 其他文件名，目标文件依赖于它们。 指令 (command): 必须以一个 Tab 字符开头！这是最常见的初学者错误。这些是 Shell 命令，比如 gcc, cp, rm。 最简单的例子：\n1 2 3 4 5 # hello.c 是源代码 # hello 是编译后的可执行文件 hello: hello.c <Tab>gcc hello.c -o hello 当你输入 make 时，它会：\n"><title>以vitis的makefile为例学习</title><link rel=canonical href=https://demo.stack.jimmycai.com/post/%E4%BB%A5vitis%E7%9A%84makefile%E4%B8%BA%E4%BE%8B%E5%AD%A6%E4%B9%A0/><link rel=stylesheet href=/scss/style.min.833d6eed45de56f48306bf57268d5b8cdfc8a60e8e7bdc99810464fcd033f7c6.css><meta property='og:title' content="以vitis的makefile为例学习"><meta property='og:description' content="好的，完全没问题！我们彻底回归本源，从“第一性原理”出发来理解 Makefile，然后再将这些原理应用到你提供的那个优雅的 Vitis Makefile 上。\n第一部分：Makefile 的第一性原理 想象一下，你不是在写代码，而是在厨房里烤蛋糕。\n目标 (Target)：你最终想要的东西，比如一个“巧克力蛋糕”。 依赖 (Prerequisites)：为了做出蛋糕，你先需要准备好的东西，比如“面粉”、“鸡蛋”、“巧克力酱”。 指令 (Command)：你具体要执行的动作，比如“把面粉和鸡蛋混合”、“加入巧克力酱并搅拌”、“放入烤箱烤30分钟”。 Makefile 的核心思想就是描述这种关系：\n要想得到【目标】，必须先确保【依赖】都已就绪，然后执行【指令】。\nmake 这个工具最聪明的地方在于，它会检查文件的时间戳。如果“巧克力蛋糕”比“巧克力酱”更新，说明你已经用最新的酱做过蛋糕了，make 就什么也不做，以节省时间。但如果你刚买了一瓶新的“巧克力酱”（文件时间戳更新了），make 就知道必须重新烤一个蛋糕。\n1. 基本语法：规则 (Rule) Makefile 的所有内容都由一条条的“规则”构成。\n1 2 3 4 目标: 依赖1 依赖2 ... <Tab>指令1 <Tab>指令2 ... 目标 (target): 通常是一个文件名，是你希望生成的文件。 :: 分隔符。 依赖 (prerequisites): 其他文件名，目标文件依赖于它们。 指令 (command): 必须以一个 Tab 字符开头！这是最常见的初学者错误。这些是 Shell 命令，比如 gcc, cp, rm。 最简单的例子：\n1 2 3 4 5 # hello.c 是源代码 # hello 是编译后的可执行文件 hello: hello.c <Tab>gcc hello.c -o hello 当你输入 make 时，它会：\n"><meta property='og:url' content='https://demo.stack.jimmycai.com/post/%E4%BB%A5vitis%E7%9A%84makefile%E4%B8%BA%E4%BE%8B%E5%AD%A6%E4%B9%A0/'><meta property='og:site_name' content='fusang blog'><meta property='og:type' content='article'><meta property='article:section' content='Post'><meta property='article:tag' content='ai-creation'><meta property='article:published_time' content='2025-11-02T12:01:24+08:00'><meta property='article:modified_time' content='2025-11-02T12:01:24+08:00'><meta name=twitter:title content="以vitis的makefile为例学习"><meta name=twitter:description content="好的，完全没问题！我们彻底回归本源，从“第一性原理”出发来理解 Makefile，然后再将这些原理应用到你提供的那个优雅的 Vitis Makefile 上。\n第一部分：Makefile 的第一性原理 想象一下，你不是在写代码，而是在厨房里烤蛋糕。\n目标 (Target)：你最终想要的东西，比如一个“巧克力蛋糕”。 依赖 (Prerequisites)：为了做出蛋糕，你先需要准备好的东西，比如“面粉”、“鸡蛋”、“巧克力酱”。 指令 (Command)：你具体要执行的动作，比如“把面粉和鸡蛋混合”、“加入巧克力酱并搅拌”、“放入烤箱烤30分钟”。 Makefile 的核心思想就是描述这种关系：\n要想得到【目标】，必须先确保【依赖】都已就绪，然后执行【指令】。\nmake 这个工具最聪明的地方在于，它会检查文件的时间戳。如果“巧克力蛋糕”比“巧克力酱”更新，说明你已经用最新的酱做过蛋糕了，make 就什么也不做，以节省时间。但如果你刚买了一瓶新的“巧克力酱”（文件时间戳更新了），make 就知道必须重新烤一个蛋糕。\n1. 基本语法：规则 (Rule) Makefile 的所有内容都由一条条的“规则”构成。\n1 2 3 4 目标: 依赖1 依赖2 ... <Tab>指令1 <Tab>指令2 ... 目标 (target): 通常是一个文件名，是你希望生成的文件。 :: 分隔符。 依赖 (prerequisites): 其他文件名，目标文件依赖于它们。 指令 (command): 必须以一个 Tab 字符开头！这是最常见的初学者错误。这些是 Shell 命令，比如 gcc, cp, rm。 最简单的例子：\n1 2 3 4 5 # hello.c 是源代码 # hello 是编译后的可执行文件 hello: hello.c <Tab>gcc hello.c -o hello 当你输入 make 时，它会：\n"><link rel="shortcut icon" href=/favicon.png></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/circuitboard_hu_b96f3e3e18dda50e.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>fusang blog</a></h1><h2 class=site-description>六根清净方为道 退步原来是向前</h2></div></header><ol class=menu-social><li><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter rel=me><svg class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/page/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/page/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/page/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><ol><li><a href=#第一部分makefile-的第一性原理>第一部分：Makefile 的第一性原理</a><ol><li><a href=#1-基本语法规则-rule>1. 基本语法：规则 (Rule)</a></li><li><a href=#2-变量-variables>2. 变量 (Variables)</a></li></ol></li><li><a href=#第二部分让-makefile-变得优雅的进阶语法>第二部分：让 Makefile 变得“优雅”的进阶语法</a><ol><li><a href=#1-自动化变量-automatic-variables>1. 自动化变量 (Automatic Variables)</a></li><li><a href=#2-模式规则-pattern-rules>2. 模式规则 (Pattern Rules)</a></li><li><a href=#3-函数-functions>3. 函数 (Functions)</a></li></ol></li><li><a href=#第三部分用第一性原理解读你的-vitis-makefile>第三部分：用第一性原理解读你的 Vitis Makefile</a></li><li><a href=#第四部分如何具体使用这个-makefile>第四部分：如何具体使用这个 Makefile</a></li></ol></li></ol></nav></div></section></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/c++/>C++</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/post/%E4%BB%A5vitis%E7%9A%84makefile%E4%B8%BA%E4%BE%8B%E5%AD%A6%E4%B9%A0/>以vitis的makefile为例学习</a></h2></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published datetime=2025-11-02T12:01:24+08:00>Nov 02, 2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>3 minute read</time></div></footer></div></header><section class=article-content><p>好的，完全没问题！我们彻底回归本源，从“第一性原理”出发来理解 Makefile，然后再将这些原理应用到你提供的那个优雅的 Vitis Makefile 上。</p><h3 id=第一部分makefile-的第一性原理>第一部分：Makefile 的第一性原理</h3><p>想象一下，你不是在写代码，而是在厨房里烤蛋糕。</p><ul><li><strong>目标 (Target)</strong>：你最终想要的东西，比如一个“巧克力蛋糕”。</li><li><strong>依赖 (Prerequisites)</strong>：为了做出蛋糕，你先需要准备好的东西，比如“面粉”、“鸡蛋”、“巧克力酱”。</li><li><strong>指令 (Command)</strong>：你具体要执行的动作，比如“把面粉和鸡蛋混合”、“加入巧克力酱并搅拌”、“放入烤箱烤30分钟”。</li></ul><p><strong>Makefile 的核心思想就是描述这种关系：</strong></p><blockquote><p><strong>要想得到【目标】，必须先确保【依赖】都已就绪，然后执行【指令】。</strong></p></blockquote><p><code>make</code> 这个工具最聪明的地方在于，它会检查文件的时间戳。如果“巧克力蛋糕”比“巧克力酱”更新，说明你已经用最新的酱做过蛋糕了，<code>make</code> 就什么也不做，以节省时间。但如果你刚买了一瓶新的“巧克力酱”（文件时间戳更新了），<code>make</code> 就知道必须重新烤一个蛋糕。</p><h4 id=1-基本语法规则-rule>1. 基本语法：规则 (Rule)</h4><p>Makefile 的所有内容都由一条条的“规则”构成。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=nf>目标</span><span class=o>:</span> 依赖1 依赖2 ...
+</span></span><span class=line><span class=cl>	&lt;Tab&gt;指令1
+</span></span><span class=line><span class=cl>	&lt;Tab&gt;指令2
+</span></span><span class=line><span class=cl>	...
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong><code>目标 (target)</code></strong>: 通常是一个文件名，是你希望生成的文件。</li><li><strong><code>:</code></strong>: 分隔符。</li><li><strong><code>依赖 (prerequisites)</code></strong>: 其他文件名，目标文件依赖于它们。</li><li><strong><code>指令 (command)</code></strong>: 必须以一个 <strong>Tab</strong> 字符开头！这是最常见的初学者错误。这些是 Shell 命令，比如 <code>gcc</code>, <code>cp</code>, <code>rm</code>。</li></ul><p><strong>最简单的例子：</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># hello.c 是源代码
+</span></span></span><span class=line><span class=cl><span class=c># hello 是编译后的可执行文件
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nf>hello</span><span class=o>:</span> <span class=n>hello</span>.<span class=n>c</span>
+</span></span><span class=line><span class=cl>	&lt;Tab&gt;gcc hello.c -o hello
+</span></span></code></pre></td></tr></table></div></div><p>当你输入 <code>make</code> 时，它会：</p><ol><li>找到默认目标 <code>hello</code>。</li><li>检查它的依赖 <code>hello.c</code>。</li><li>比较 <code>hello</code> 和 <code>hello.c</code> 的修改时间。<ul><li>如果 <code>hello</code> 文件不存在，或者 <code>hello.c</code> 比 <code>hello</code> 更新，那么&mldr;</li></ul></li><li>执行指令 <code>gcc hello.c -o hello</code> 来重新生成 <code>hello</code>。</li></ol><h4 id=2-变量-variables>2. 变量 (Variables)</h4><p>为了不重复写同样的东西，我们使用变量。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># 定义变量
+</span></span></span><span class=line><span class=cl><span class=nv>COMPILER</span> <span class=o>=</span> gcc
+</span></span><span class=line><span class=cl><span class=nv>FLAGS</span> <span class=o>=</span> -Wall -g
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 使用变量 $(VARIABLE_NAME)
+</span></span></span><span class=line><span class=cl><span class=nf>hello</span><span class=o>:</span> <span class=n>hello</span>.<span class=n>c</span>
+</span></span><span class=line><span class=cl>	<span class=k>$(</span>COMPILER<span class=k>)</span> <span class=k>$(</span>FLAGS<span class=k>)</span> hello.c -o hello
+</span></span></code></pre></td></tr></table></div></div><p>这样做的好处是，如果想换编译器（比如 <code>clang</code>）或者修改编译选项，只需要改一行变量定义即可。</p><hr><h3 id=第二部分让-makefile-变得优雅的进阶语法>第二部分：让 Makefile 变得“优雅”的进阶语法</h3><p>如果项目里有几十个 <code>.c</code> 文件，为每个文件都写一条规则太痛苦了。所以 <code>make</code> 提供了一些强大的工具来自动化这个过程。</p><h4 id=1-自动化变量-automatic-variables>1. 自动化变量 (Automatic Variables)</h4><p>在规则的指令部分，你可以使用一些特殊的变量，它们会自动被 <code>make</code> 替换：</p><ul><li><code>$@</code>: 代表<strong>目标</strong>的名字。 (The **@**t symbol, the target)</li><li><code>$&lt;</code>: 代表<strong>第一个依赖</strong>的名字。 (The <strong>&lt;</strong> left-arrow, input)</li><li><code>$^</code>: 代表<strong>所有依赖</strong>的名字，用空格隔开。</li></ul><p>现在，我们的规则可以写得更通用：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=nf>hello</span><span class=o>:</span> <span class=n>hello</span>.<span class=n>c</span>
+</span></span><span class=line><span class=cl>	<span class=k>$(</span>COMPILER<span class=k>)</span> <span class=k>$(</span>FLAGS<span class=k>)</span> $&lt; -o <span class=nv>$@</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>$&lt;</code> 会被替换为 <code>hello.c</code>，<code>$@</code> 会被替换为 <code>hello</code>。效果和之前完全一样，但更具可读性和通用性。</p><h4 id=2-模式规则-pattern-rules>2. 模式规则 (Pattern Rules)</h4><p>这是 Makefile 的精华所在！它允许你定义一个“模板”规则来处理一整类的文件。<code>%</code> 是一个通配符。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># 这个规则告诉 make 如何从任意一个 .c 文件生成一个对应的 .o 文件
+</span></span></span><span class=line><span class=cl><span class=nf>%.o</span><span class=o>:</span> %.<span class=n>c</span>
+</span></span><span class=line><span class=cl>	<span class=k>$(</span>COMPILER<span class=k>)</span> <span class=k>$(</span>FLAGS<span class=k>)</span> -c $&lt; -o <span class=nv>$@</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>%.o</code>: 匹配任何以 <code>.o</code> 结尾的目标，比如 <code>xspi.o</code>, <code>main.o</code>。</li><li><code>%.c</code>: 匹配与目标同名的 <code>.c</code> 依赖，比如 <code>xspi.c</code>, <code>main.c</code>。</li><li>指令 <code>$(COMPILER) $(FLAGS) -c $&lt; -o $@</code> 现在可以处理任何 <code>xxx.c -> xxx.o</code> 的编译！</li></ul><h4 id=3-函数-functions>3. 函数 (Functions)</h4><p>Makefile 提供了类似编程语言的函数来处理文本。你提供的 Makefile 中用到了几个关键函数：</p><ul><li><code>$(wildcard PATTERN)</code>: 查找并返回匹配 <code>PATTERN</code> 的所有文件名。<ul><li><code>SRCFILES := $(wildcard *.c)</code> 会找到当前目录下所有 <code>.c</code> 文件，并把它们的列表赋值给 <code>SRCFILES</code> 变量。</li></ul></li><li><code>$(basename NAMES)</code>: 去掉文件名中的后缀。<ul><li><code>$(basename xspi.c xspi_g.c)</code> 会返回 <code>xspi xspi_g</code>。</li></ul></li><li><code>$(addsuffix SUFFIX, NAMES)</code>: 给列表中的每个名字添加后缀。</li><li><code>$(addprefix PREFIX, NAMES)</code>: 给列表中的每个名字添加前缀。</li></ul><hr><h3 id=第三部分用第一性原理解读你的-vitis-makefile>第三部分：用第一性原理解读你的 Vitis Makefile</h3><p>现在，我们用刚刚学到的知识来逐段分析这个 Makefile。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 1. 变量定义区 (Principles: Variables)
+</span></span></span><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 这些变量被故意留空，等待外部传入。
+</span></span></span><span class=line><span class=cl><span class=c># 这就像一个函数有多个参数，等待调用者提供具体的值。
+</span></span></span><span class=line><span class=cl><span class=nv>COMPILER</span><span class=o>=</span>
+</span></span><span class=line><span class=cl><span class=nv>COMPILER_FLAGS</span><span class=o>=</span>
+</span></span><span class=line><span class=cl><span class=nv>EXTRA_COMPILER_FLAGS</span><span class=o>=</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 定义输出目录和头文件目录
+</span></span></span><span class=line><span class=cl><span class=nv>RELEASEDIR</span><span class=o>=</span>../../../lib/
+</span></span><span class=line><span class=cl><span class=nv>INCLUDEDIR</span><span class=o>=</span>../../../include/
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 定义 include 路径
+</span></span></span><span class=line><span class=cl><span class=nv>INCLUDES</span><span class=o>=</span>-I./. -I<span class=k>$(</span>INCLUDEDIR<span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 2. 自动化文件处理 (Principles: Functions, Variables)
+</span></span></span><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 自动查找当前目录下所有 .c 文件
+</span></span></span><span class=line><span class=cl><span class=nv>SRCFILES</span><span class=o>:=</span><span class=k>$(</span>wildcard *.c<span class=k>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 这是一行优雅的核心代码，我们来分解它：
+</span></span></span><span class=line><span class=cl><span class=c># 假设 SRCFILES 是 &#34;xspi.c xspi_options.c&#34;
+</span></span></span><span class=line><span class=cl><span class=c># 1. $(basename $(SRCFILES))       -&gt; &#34;xspi xspi_options&#34;
+</span></span></span><span class=line><span class=cl><span class=c># 2. $(addsuffix .o, ...)          -&gt; &#34;xspi.o xspi_options.o&#34;
+</span></span></span><span class=line><span class=cl><span class=c># 3. $(addprefix $(RELEASEDIR), ...) -&gt; &#34;../../../lib/xspi.o ../../../lib/xspi_options.o&#34;
+</span></span></span><span class=line><span class=cl><span class=nv>OBJECTS</span> <span class=o>=</span> <span class=k>$(</span>addprefix <span class=k>$(</span>RELEASEDIR<span class=k>)</span>, <span class=k>$(</span>addsuffix .o, <span class=k>$(</span>basename <span class=k>$(</span>wildcard *.c<span class=k>))))</span>
+</span></span></code></pre></td></tr></table></div></div><p>这一行代码就自动计算出了所有需要生成的目标文件（<code>.o</code> 文件）以及它们应该存放的位置。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 3. 定义最终目标 (Principles: Rules)
+</span></span></span><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 定义了一个叫 libs 的目标，它依赖于所有我们刚刚计算出的 .o 文件。
+</span></span></span><span class=line><span class=cl><span class=c># 当你运行 `make` 或 `make libs` 时，make 会确保所有 $(OBJECTS) 都被生成。
+</span></span></span><span class=line><span class=cl><span class=nf>libs</span><span class=o>:</span> <span class=k>$(</span><span class=nv>OBJECTS</span><span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><p>这是一个“聚合目标”，它本身没有指令，它的作用就是触发所有依赖项的构建。</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 4. 定义核心编译规则 (Principles: Pattern Rules, Automatic Variables)
+</span></span></span><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 这条模式规则是整个 Makefile 的“引擎”。
+</span></span></span><span class=line><span class=cl><span class=c># 它告诉 make 如何从一个 .c 文件（在当前目录）
+</span></span></span><span class=line><span class=cl><span class=c># 生成一个 .o 文件（在 RELEASEDIR 目录）。
+</span></span></span><span class=line><span class=cl><span class=nf>$(RELEASEDIR)%.o</span><span class=o>:</span> %.<span class=n>c</span>
+</span></span><span class=line><span class=cl>	<span class=si>${</span><span class=nv>COMPILER</span><span class=si>}</span> <span class=k>$(</span>CC_FLAGS<span class=k>)</span> <span class=k>$(</span>ECC_FLAGS<span class=k>)</span> <span class=k>$(</span>INCLUDES<span class=k>)</span> <span class=k>$(</span>DEPENDENCY_FLAGS<span class=k>)</span> $&lt; -o <span class=nv>$@</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><strong><code>$(RELEASEDIR)%.o: %.c</code></strong>: 模式。例如，为了生成目标 <code>../../../lib/xspi.o</code>，<code>make</code> 会自动寻找依赖 <code>xspi.c</code>。</li><li><strong><code>$&lt;</code></strong>: 自动替换为依赖，即 <code>xspi.c</code>。</li><li><strong><code>$@</code></strong>: 自动替换为目标，即 <code>../../../lib/xspi.o</code>。</li><li><code>$(COMPILER)</code> 等都是外部传入的变量，提供了极大的灵活性。</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-makefile data-lang=makefile><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># 5. 定义头文件安装规则 (Principles: Rules, Pattern Rules)
+</span></span></span><span class=line><span class=cl><span class=c># --------------------
+</span></span></span><span class=line><span class=cl><span class=c># .PHONY: include  &lt;-- 告诉make，&#34;include&#34; 不是一个文件名，而是一个动作的名称。
+</span></span></span><span class=line><span class=cl><span class=nf>.PHONY</span><span class=o>:</span> <span class=n>include</span>
+</span></span><span class=line><span class=cl><span class=c># &#39;make include&#39; 这个动作，依赖于所有头文件被拷贝到目标目录。
+</span></span></span><span class=line><span class=cl><span class=nf>include</span><span class=o>:</span> <span class=k>$(</span><span class=nv>addprefix</span> <span class=k>$(</span><span class=nv>INCLUDEDIR</span><span class=k>)</span>,<span class=k>$(</span><span class=nv>wildcard</span> *.<span class=nv>h</span><span class=k>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c># 这是拷贝头文件的模式规则：
+</span></span></span><span class=line><span class=cl><span class=c># 如何生成一个在 INCLUDEDIR 里的 .h 文件？从当前目录的同名 .h 文件拷贝。
+</span></span></span><span class=line><span class=cl><span class=nf>$(INCLUDEDIR)%.h</span><span class=o>:</span> %.<span class=n>h</span>
+</span></span><span class=line><span class=cl>	<span class=k>$(</span>CP<span class=k>)</span> $&lt; <span class=nv>$@</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=第四部分如何具体使用这个-makefile>第四部分：如何具体使用这个 Makefile</h3><p>这个 Makefile 被设计成一个“组件”，由一个更上层的系统来调用和配置。</p><ol><li><strong>配置变量</strong>: 你不会直接修改这个 Makefile。而是在调用 <code>make</code> 命令时，从命令行传入变量的值。</li><li><strong>执行目标</strong>: 你告诉 <code>make</code> 你想要什么目标。</li></ol><p><strong>一个典型的使用场景会是这样：</strong></p><p>在一个终端里，<code>cd</code> 到这个 <code>src</code> 目录下，然后执行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 编译所有 .o 文件</span>
+</span></span><span class=line><span class=cl>make <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=nv>COMPILER</span><span class=o>=</span><span class=s2>&#34;arm-none-eabi-gcc&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=nv>COMPILER_FLAGS</span><span class=o>=</span><span class=s2>&#34;-O2 -c&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=nv>DEPENDENCY_FLAGS</span><span class=o>=</span><span class=s2>&#34;-MMD -MP&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  libs
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 安装所有头文件到 include 目录</span>
+</span></span><span class=line><span class=cl>make <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=nv>INCLUDEDIR</span><span class=o>=</span>../../../include <span class=se>\
+</span></span></span><span class=line><span class=cl>  include
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 清理所有生成的文件</span>
+</span></span><span class=line><span class=cl>make <span class=se>\
+</span></span></span><span class=line><span class=cl>  <span class=nv>RELEASEDIR</span><span class=o>=</span>../../../lib/ <span class=se>\
+</span></span></span><span class=line><span class=cl>  clean
+</span></span></code></pre></td></tr></table></div></div><ul><li><code>COMPILER="arm-none-eabi-gcc"</code>: 为变量 <code>COMPILER</code> 赋值，指定了交叉编译器。</li><li><code>COMPILER_FLAGS="-O2 -c"</code>: 传入了编译选项（优化等级2，只编译不链接）。</li><li><code>libs</code>: 告诉 <code>make</code> 我们想要的目标是 <code>libs</code>。<code>make</code> 就会自动找到 <code>libs</code> 规则，然后去构建它的所有依赖（即所有的 <code>.o</code> 文件）。</li></ul><p><strong>总结起来，这个 Makefile 的优雅之处在于：</strong></p><ul><li><strong>声明式</strong>: 你只描述了“什么依赖什么”以及“如何生成”，而不是一步步的命令。</li><li><strong>自动化</strong>: 自动发现源文件、自动计算目标文件、自动应用编译规则。</li><li><strong>可配置和可复用</strong>: 通过外部变量进行配置，使得这个 Makefile 本身可以被用在任何 C 语言库的编译中，无需修改一个字。</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/ai-creation/>Ai-Creation</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/post/stl%E5%AE%B9%E5%99%A8%E9%97%AE%E9%A2%98/><div class=article-details><h2 class=article-title>Stl容器问题</h2></div></a></article><article><a href=/post/cs106-assignment1-soundex/><div class=article-details><h2 class=article-title>Cs106 Assignment1 Soundex</h2></div></a></article><article><a href=/post/gcc%E7%9A%84%E9%BB%91%E9%AD%94%E6%B3%95/><div class=article-details><h2 class=article-title>Gcc的黑魔法</h2></div></a></article><article><a href=/post/g++%E7%9A%84shell%E5%91%BD%E4%BB%A4%E9%BB%91%E9%AD%94%E6%B3%95/><div class=article-details><h2 class=article-title>gcc的shell命令黑魔法</h2></div></a></article><article><a href=/post/cs106-assignment1-perfect_number/><div class=article-details><h2 class=article-title>Cs106 Assignment1 Perfect_number</h2></div></a></article></div></div></aside><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2026 fusang blog</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>Theme <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.33.0>Stack</a></b> designed by <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.c922af694cc257bf1ecc41c0dd7b0430f9114ec280ccf67cd2c6ad55f5316c4e.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

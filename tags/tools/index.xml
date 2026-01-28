@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tools on fusang blog</title><link>https://demo.stack.jimmycai.com/tags/tools/</link><description>Recent content in Tools on fusang blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 24 Oct 2025 09:38:06 +0800</lastBuildDate><atom:link href="https://demo.stack.jimmycai.com/tags/tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Fzf Fd Rg</title><link>https://demo.stack.jimmycai.com/post/fzf-fd-rg/</link><pubDate>Fri, 24 Oct 2025 09:38:06 +0800</pubDate><guid>https://demo.stack.jimmycai.com/post/fzf-fd-rg/</guid><description>&lt;p&gt;好的，这是一个关于 &lt;code&gt;fzf&lt;/code&gt;、&lt;code&gt;fd&lt;/code&gt; 和 &lt;code&gt;rg&lt;/code&gt; 这三个现代命令行神器（俗称“命令行三剑客”）的用法梗概。它们各自独立时已经非常强大，但组合使用更能发挥出惊人的效率。&lt;/p&gt;
+&lt;h3 id="核心思想"&gt;核心思想
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;fd&lt;/code&gt;&lt;/strong&gt;: 替代 &lt;code&gt;find&lt;/code&gt;，用来 &lt;strong&gt;找文件&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;rg&lt;/code&gt; (ripgrep)&lt;/strong&gt;: 替代 &lt;code&gt;grep&lt;/code&gt;，用来 &lt;strong&gt;找文件内容&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;code&gt;fzf&lt;/code&gt; (fuzzy finder)&lt;/strong&gt;: 模糊搜索器，用来 &lt;strong&gt;从列表中交互式地选择&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;它们的共同优点是：&lt;strong&gt;快、智能、用户友好&lt;/strong&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="1-fzf---命令行模糊搜索器"&gt;1. &lt;code&gt;fzf&lt;/code&gt; - 命令行模糊搜索器
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;一句话总结：一个交互式的过滤器，可以从任何文本输入中快速筛选并选择一项或多项。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fzf&lt;/code&gt; 是这三者中的“粘合剂”，能与各种命令无缝配合。&lt;/p&gt;
+&lt;h4 id="核心功能"&gt;核心功能
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;模糊匹配&lt;/strong&gt;：你不需要输入完整的词，只需输入几个关键字母，它就能找到匹配项。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;交互式界面&lt;/strong&gt;：实时反馈，上下键选择，回车确认。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;高度可定制&lt;/strong&gt;：可以自定义外观、快捷键和预览窗口。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;与 Shell 深度集成&lt;/strong&gt;：可以极大地增强 &lt;code&gt;Ctrl+R&lt;/code&gt;（历史命令搜索）、&lt;code&gt;Ctrl+T&lt;/code&gt;（文件路径补全）等功能。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="常用场景与示例"&gt;常用场景与示例
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;基础用法：查找当前目录下的文件&lt;/strong&gt;
+直接运行 &lt;code&gt;fzf&lt;/code&gt;，它会列出所有文件和目录，你可以模糊搜索并按回车，它会将你选择的文件名输出到标准输出。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fzf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;增强命令历史搜索 (Ctrl+R)&lt;/strong&gt;
+这是 &lt;code&gt;fzf&lt;/code&gt; 最受欢迎的功能。安装后，按 &lt;code&gt;Ctrl+R&lt;/code&gt; 会调出 &lt;code&gt;fzf&lt;/code&gt; 的交互式历史记录搜索界面，比默认的好用一万倍。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;查找文件并用 Vim 打开&lt;/strong&gt;
+结合命令替换 &lt;code&gt;$(...)&lt;/code&gt; 或反引号 &lt;code&gt;`...`&lt;/code&gt;。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 查找文件，然后用 vim 打开选中的那个&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim &lt;span class="k"&gt;$(&lt;/span&gt;fzf&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 查找并选择多个文件打开&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim &lt;span class="k"&gt;$(&lt;/span&gt;fzf --multi&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;作为管道中的过滤器&lt;/strong&gt;
+&lt;code&gt;fzf&lt;/code&gt; 可以处理任何通过管道 (&lt;code&gt;|&lt;/code&gt;) 传给它的文本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 从 ps 结果中选择一个进程并结束它&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps -ef &lt;span class="p"&gt;|&lt;/span&gt; fzf &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; xargs &lt;span class="nb"&gt;kill&lt;/span&gt; -9
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 模糊搜索并切换 git 分支&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git branch &lt;span class="p"&gt;|&lt;/span&gt; fzf &lt;span class="p"&gt;|&lt;/span&gt; xargs git checkout
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="2-fd---一个更简单更快速的-find"&gt;2. &lt;code&gt;fd&lt;/code&gt; - 一个更简单、更快速的 &lt;code&gt;find&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;一句话总结：一个为人类设计的、默认配置极佳的找文件工具。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;fd&lt;/code&gt; 在功能上与 &lt;code&gt;find&lt;/code&gt; 类似，但语法更简洁，速度更快。&lt;/p&gt;
+&lt;h4 id="核心功能-1"&gt;核心功能
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;语法简单&lt;/strong&gt;：&lt;code&gt;fd &amp;lt;模式&amp;gt;&lt;/code&gt; 即可，不像 &lt;code&gt;find&lt;/code&gt; 需要复杂的 &lt;code&gt;-name&lt;/code&gt; 等参数。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;智能忽略&lt;/strong&gt;：默认忽略 &lt;code&gt;.gitignore&lt;/code&gt; 中定义的文件、隐藏文件和目录。这在项目开发中非常有用。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;速度极快&lt;/strong&gt;：利用并行处理，搜索速度通常比 &lt;code&gt;find&lt;/code&gt; 快得多。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;彩色输出&lt;/strong&gt;：结果按文件类型着色，一目了然。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="常用场景与示例-1"&gt;常用场景与示例
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;基础用法：查找包含 &amp;ldquo;report&amp;rdquo; 的文件&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 在当前目录及子目录中查找&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd report
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 相当于 find . -iname &amp;#34;*report*&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;按扩展名查找&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 查找所有的 markdown 文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -e md
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 查找所有的 jpg 或 png 文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -e jpg -e png
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;按文件类型查找&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 只查找目录&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -t d
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 只查找文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -t f
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 只查找符号链接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -t l
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;执行命令&lt;/strong&gt;
+&lt;code&gt;-x&lt;/code&gt; 或 &lt;code&gt;--exec&lt;/code&gt; 参数可以对每个搜索结果执行一个命令。&lt;code&gt;{}&lt;/code&gt; 是占位符，代表找到的文件路径。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 查找所有 zip 文件并解压&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -e zip -x unzip &lt;span class="o"&gt;{}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 批量修改文件名（将 .jpeg 改为 .jpg）&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd -e jpeg -x mv &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;.&lt;span class="o"&gt;}&lt;/span&gt;.jpg
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# {.}` 代表不含扩展名的路径&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;覆盖智能忽略&lt;/strong&gt;
+如果你想搜索隐藏文件或被 &lt;code&gt;.gitignore&lt;/code&gt; 忽略的文件：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# --hidden: 搜索隐藏文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# --no-ignore: 不使用 .gitignore 规则&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;fd --hidden --no-ignore &lt;span class="s1"&gt;&amp;#39;^\.bash&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="3-rg-ripgrep---一个超快的-grep"&gt;3. &lt;code&gt;rg&lt;/code&gt; (ripgrep) - 一个超快的 &lt;code&gt;grep&lt;/code&gt;
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;一句话总结：一个专注于速度和易用性的代码内容搜索工具。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;rg&lt;/code&gt; 同样默认尊重 &lt;code&gt;.gitignore&lt;/code&gt;，并且会自动跳过二进制文件，是程序员日常搜索代码的利器。&lt;/p&gt;
+&lt;h4 id="核心功能-2"&gt;核心功能
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;速度极快&lt;/strong&gt;：通常是 &lt;code&gt;grep&lt;/code&gt; 或 &lt;code&gt;ag&lt;/code&gt; (The Silver Searcher) 中最快的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;智能忽略&lt;/strong&gt;：和 &lt;code&gt;fd&lt;/code&gt; 一样，默认忽略 &lt;code&gt;.gitignore&lt;/code&gt; 和隐藏文件。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;优秀输出&lt;/strong&gt;：彩色高亮、显示行号、自动分组。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;跨平台&lt;/strong&gt;：在 Windows, macOS, Linux 上表现同样出色。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="常用场景与示例-2"&gt;常用场景与示例
+&lt;/h4&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;基础用法：在当前目录搜索字符串&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 搜索包含 &amp;#34;main&amp;#34; 的所有行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg main
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;不区分大小写搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg -i &lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;(&lt;code&gt;rg&lt;/code&gt; 默认使用智能大小写：如果你的搜索词全小写，它就不区分大小写；如果包含大写，它就精确匹配。)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;仅列出包含匹配项的文件名&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg -l &lt;span class="s2"&gt;&amp;#34;TODO&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;在特定类型的文件中搜索&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 只在 python 文件中搜索 &amp;#34;import&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg &lt;span class="s2"&gt;&amp;#34;import&amp;#34;&lt;/span&gt; -t py
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 不在 javascript 文件中搜索 &amp;#34;console.log&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg &lt;span class="s2"&gt;&amp;#34;console.log&amp;#34;&lt;/span&gt; -g &lt;span class="s1"&gt;&amp;#39;!*.js&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;显示上下文&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 显示匹配行的前后各 2 行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg -C &lt;span class="m"&gt;2&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;important_function&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;统计匹配数量&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg --count &lt;span class="s2"&gt;&amp;#34;User&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id="三者合璧黄金组合"&gt;三者合璧：黄金组合
+&lt;/h3&gt;&lt;p&gt;这三个工具的真正威力在于通过管道 (&lt;code&gt;|&lt;/code&gt;) 结合，形成强大的工作流。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;场景1：查找一个项目中的配置文件，然后交互式选择并打开。&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;fd&lt;/code&gt; 负责快速找出所有 &lt;code&gt;.conf&lt;/code&gt; 文件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fzf&lt;/code&gt; 负责提供交互界面让你选择。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vim&lt;/code&gt; 负责打开你选择的文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 1. fd 找到所有以 .conf 结尾的文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 2. | 将结果传给 fzf&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 3. fzf 让你模糊搜索并选择一个&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 4. vim 打开最终选定的文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim &lt;span class="k"&gt;$(&lt;/span&gt;fd -e conf &lt;span class="p"&gt;|&lt;/span&gt; fzf&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;场景2：在代码库中搜索一个函数，然后交互式地预览并跳转到该行。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;这是最强大的组合之一，需要 &lt;code&gt;fzf&lt;/code&gt; 的预览功能。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;rg&lt;/code&gt; 负责搜索函数名，并输出 &lt;code&gt;文件名:行号:内容&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;fzf&lt;/code&gt; 负责交互选择，并使用 &lt;code&gt;--preview&lt;/code&gt; 功能实时显示文件上下文。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;vim&lt;/code&gt;/&lt;code&gt;vscode&lt;/code&gt; 等编辑器负责打开文件并跳转到指定行。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# rg 搜索 &amp;#34;function_name&amp;#34;，--vimgrep 格式化输出&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# fzf 读取结果，并使用 bat (一个带高亮的 cat) 来预览文件&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# {1} 是文件名, {2} 是行号&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rg --vimgrep &lt;span class="s2"&gt;&amp;#34;function_name&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; fzf --preview &lt;span class="s1"&gt;&amp;#39;bat --color=always --highlight-line {2} {1}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;当你选中一项后，可以进一步处理 &lt;code&gt;fzf&lt;/code&gt; 的输出，提取文件名和行号，然后用编辑器打开。例如：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# 选中后，提取文件名和行号，用 vim 打开并跳转&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ITEM&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;rg --vimgrep &lt;span class="s2"&gt;&amp;#34;my_api_key&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; fzf&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ITEM&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; cut -d: -f1&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;LINE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="nv"&gt;$ITEM&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; cut -d: -f2&lt;span class="k"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;[&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$FILE&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; vim &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$FILE&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt; +&lt;span class="nv"&gt;$LINE&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="总结表格"&gt;总结表格
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="text-align: left"&gt;工具&lt;/th&gt;
+&lt;th style="text-align: left"&gt;核心功能&lt;/th&gt;
+&lt;th style="text-align: left"&gt;经典替代品&lt;/th&gt;
+&lt;th style="text-align: left"&gt;关键优势&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;&lt;code&gt;fzf&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;交互式选择&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;(无直接替代)&lt;/td&gt;
+&lt;td style="text-align: left"&gt;模糊搜索、万物皆可过滤、高度集成&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;&lt;code&gt;fd&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;查找文件/目录&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;find&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;语法简单、速度快、智能忽略&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;&lt;code&gt;rg&lt;/code&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;strong&gt;搜索文件内容&lt;/strong&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;&lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;ack&lt;/code&gt;, &lt;code&gt;ag&lt;/code&gt;&lt;/td&gt;
+&lt;td style="text-align: left"&gt;速度极快、智能忽略、输出友好&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;</description></item></channel></rss>
